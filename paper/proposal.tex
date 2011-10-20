@@ -23,22 +23,50 @@
 % Document
 % What is exactly the function of your tool? That is, what will it do?
 \section{Introduction}
-Location sharing services, such 
-are beginning to take ground
+FootTraffic is a location recommendation engine that, unlike existing services, takes into account the
+location's popularity based on checkin information courtesy of FourSquare.
 
 % Why would we need such a tool and who would you expect to use it and benefit from it?
 \section{Purpose}
 % impact, need
+People love mapping and rating services. Looking for a specific genre of restaurant in your area with
+good prices and reviews? There's plenty of tools out there to help you out!
+\\ \\
+While this is useful information, you don't quite get the full picture. Does this restaurant have notoriously
+long waits on Friday nights? A reviewer may point that out, but you can't always count on it, and even
+then it isn't taken into account.
+\\ \\
+FootTraffic, however, doesn't leave this information out. We take data from FourSquare checkins, allowing
+us to guage popularity during times of the day and year. Stuck waiting for a table at a TexMex restaurant
+and wishing you could find another one close-by that is still rated well and known to be less busy at
+that time of day? We can help you with that! Looking for the local hotspots at night? We can find them for you.  
+\\ \\
+Users can submit queries just like they would to Google Maps, using specific locations or addresses,
+or broad categories. We'll combine the Google results with information gathered from our database of
+FourSquare checkins as well as any number of rating services. We'll allow the user to sort their results
+based on popularity for current or future dates, allowing them to find the location that fits their needs best.
+\\ \\
+The main challenge we face in building FootTraffic is figuring out how best to weight our location data
+to determine overall popularity. Keeping such a large dataset with millions of locations and checkin
+data over the course of several years is not trivial, and querying it in a timely manner makes it more
+difficult. These problems are not new, however, and with the correct approach the amount of information is manageable.
+\\ \\
+We have to pull in at least three sources of information: GoogleMaps data to determine the location (as
+well as review data), Yelp for restaurant ratings (easily swapped out or augmented with other rating
+websites), as well as our database of FourSquare checkins. Returning relevant results to our users means
+processing this data and weighting our results in a manner that best represents their desires. It will
+take some trial and error to determine this.
 
-% Does this kind of tools already exist? If similar tools exist, how is your tool different from them? 
 % Would people care about the difference? How hard is it to build such a tool? What is the challenge?
 \section{Related Work}
 
 \section{Design and Methods}
 % How do you plan to build it?
 \subsection{Design Specifications}
-Rails, database (mysql, sqlite3)
-Modules, so Yelp reviews will only show up when the category of venues is restaurants
+Since this a web application, we plan on using the Ruby on Rails framework. Not only will it allow us
+to rapidly build the web application, it provides an overall architecture for us to build the data processing
+on top of as well as an easy and somewhat transparent way to interact with our database. We plan on using
+MariahDB, a fork of MySQL as our main database.
 
 % What existing resources can you use?
 \subsection{Development Resources}
@@ -46,11 +74,13 @@ For our search engine, we will be reusing the FourSquare checkin data from the r
 \footnote{"Toward Traffic-Driven Location-Based Web Search" by Zhiyuan Cheng, James Caverlee, Krishna Y. Kamath, and Kyumin Lee, ACM 978-1-4503-0717-8/11/10},
 which is 22 million checkins gathered from Twitter's public streaming, from October 2010 to January 2011. 
 The data can be publicly downloaded at \href{http://infolab.tamu.edu/static/users/zhiyuan/icwsm_2011.zip}{infolab.tamu.edu}.
-Using this dataset, we can extract a wealth of information, including location, time, category of the venues, frequency, tags, reviews, features, photos, etc.
-Needless to say, this 3 GB of dataset is the integral piece that drives our search engine.
+Using this dataset, we can extract a wealth of information, including location, time, category of the
+venues, frequency, tags, reviews, features, photos, etc. Needless to say, this 3 GB of dataset is the
+integral piece that drives our search engine.
 \\ \\
-In addition, in our preliminary brainstorm, we have decided to use Google Maps API to plot the different venues in a geographical map, and
-Yelp API to show restaurant reviews. Other APIs will possibly used as we add more modules to different venues and categories.
+In addition, in our preliminary brainstorm, we have decided to use Google Maps API to plot the different
+venues in a geographical map, and Yelp API to show restaurant reviews. Other APIs will possibly used
+as we add more modules to different venues and categories.
 
 % How will you demonstrate the usefulness of your tool?
 \subsection{Broader Impact and Needs}
@@ -59,8 +89,8 @@ Yelp API to show restaurant reviews. Other APIs will possibly used as we add mor
 \section{Management Plan}
 \subsection{Roles}
 To manage our time successfully, we have set a private Git repository on GitHub to manage our codebase. 
-We plan to meet twice a week and continually have dialogues via IRC. We will split development and documentation
-responsibilities equally.
+We plan to meet at least twice a week and continually have dialogues via IRC. We will split development
+and documentation responsibilites equally.
 
 \subsection{Schedule of tasks}
 \begin{tabular}{|l|l|l|}

@@ -1,3 +1,4 @@
 paper/*.log
 paper/*.aux
+paper/*.out
 *.swp

@@ -4,7 +4,8 @@
 % 
 \documentclass{article}
 \renewcommand{\contentsname}{Table of Contents}
-\newcommand{\PaperTitle}{Proposal: A Traffic-Driven Location-Based Web Search}
+\newcommand{\PaperTitle}{Proposal: A Traffic-Driven Location-Based Web Search Engine}
+\usepackage{hyperref}
 %\usepackage{fullpage}
 
 \begin{document}
@@ -22,6 +23,8 @@
 % Document
 % What is exactly the function of your tool? That is, what will it do?
 \section{Introduction}
+Location sharing services, such 
+are beginning to take ground
 
 % Why would we need such a tool and who would you expect to use it and benefit from it?
 \section{Purpose}
@@ -35,10 +38,19 @@
 % How do you plan to build it?
 \subsection{Design Specifications}
 Rails, database (mysql, sqlite3)
+Modules, so Yelp reviews will only show up when the category of venues is restaurants
 
 % What existing resources can you use?
 \subsection{Development Resources}
-%the 3 gigs of data, Yelp API
+For our search engine, we will be reusing the FourSquare checkin data from the research paper
+\footnote{"Toward Traffic-Driven Location-Based Web Search" by Zhiyuan Cheng, James Caverlee, Krishna Y. Kamath, and Kyumin Lee, ACM 978-1-4503-0717-8/11/10},
+which is 22 million checkins gathered from Twitter's public streaming, from October 2010 to January 2011. 
+The data can be publicly downloaded at \href{http://infolab.tamu.edu/static/users/zhiyuan/icwsm_2011.zip}{infolab.tamu.edu}.
+Using this dataset, we can extract a wealth of information, including location, time, category of the venues, frequency, tags, reviews, features, photos, etc.
+Needless to say, this 3 GB of dataset is the integral piece that drives our search engine.
+\\ \\
+In addition, in our preliminary brainstorm, we have decided to use Google Maps API to plot the different venues in a geographical map, and
+Yelp API to show restaurant reviews. Other APIs will possibly used as we add more modules to different venues and categories.
 
 % How will you demonstrate the usefulness of your tool?
 \subsection{Broader Impact and Needs}
@@ -48,7 +60,7 @@ Rails, database (mysql, sqlite3)
 \subsection{Roles}
 To manage our time successfully, we have set a private Git repository on GitHub to manage our codebase. 
 We plan to meet twice a week and continually have dialogues via IRC. We will split development and documentation
-responsibilites equally.
+responsibilities equally.
 
 \subsection{Schedule of tasks}
 \begin{tabular}{|l|l|l|}
@@ -56,13 +68,13 @@ responsibilites equally.
   & Tasks                             & Due Date   \\ \hline
 - & Submit proposal                   & 10/21/2011 \\
 - & Proposal feedback                 & 10/27/2011 \\
-* & Complete Milestone Jog            & 10/30/2011 \\
-* & Complete Milestone Hurdling       & 11/15/2011 \\
+> & Complete Milestone Jog            & 10/30/2011 \\
+> & Complete Milestone Hurdling       & 11/15/2011 \\
 - & Project checkpoint                & 11/15/2011 \\
 - & Two slides                        & 11/22/2011 \\
-* & Complete Milestone Sprint         & 11/27/2011 \\
+> & Complete Milestone Sprint         & 11/27/2011 \\
 - & Finish in-class presentation      & 11/29/2011 \\
-* & Complete Milestone Run            & 12/10/2011 \\
+> & Complete Milestone Run            & 12/10/2011 \\
 - & Finish executive summary + demo   & 12/12/2011 \\
 \hline
 \end{tabular}

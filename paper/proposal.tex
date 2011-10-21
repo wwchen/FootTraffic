@@ -4,7 +4,7 @@
 % 
 \documentclass{article}
 \renewcommand{\contentsname}{Table of Contents}
-\newcommand{\PaperTitle}{Proposal: A Traffic-Driven Location-Based Web Search Engine}
+\newcommand{\PaperTitle}{Proposal}
 \usepackage{hyperref}
 %\usepackage{fullpage}
 
@@ -23,8 +23,17 @@
 % Document
 % What is exactly the function of your tool? That is, what will it do?
 \section{Introduction}
-FootTraffic is a location recommendation engine that, unlike existing services, takes into account the
-location's popularity based on checkin information courtesy of FourSquare.
+We are seeing an increasing amount of location sharing from social services Foursquare, Facebook, Google Latitude, etc.,
+and we want to harness these traffic to recommend venues to users based on the traffic patterns. Most location-based
+search engines today rank results based on proximity, user rating, category, and popularity. We want to add another 
+dimension to location-based searches, and that is ranking based on observed traffic similarities.
+This ``\textit{temporal dynamics embedded in the checkins} from location sharing services''
+\footnote{``\href{http://faculty.cs.tamu.edu/caverlee/pubs/cheng11cikm.pdf}{Toward Traffic-Driven Location-Based Web Search}''
+  by Zhiyuan Cheng, James Caverlee, Krishna Y. Kamath, and Kyumin Lee; CIKM 2011},
+approach is introduced by a research paper authored by Zhiyuan Cheng, James Caverlee, Krishna Y. Kamath,
+and Kyumin Lee, and the fountain of FootTraffic search engine will be based on the ideas from the paper
+\footnote{A copy of the paper can be found at: \url{http://faculty.cs.tamu.edu/caverlee/pubs/cheng11cikm.pdf}}
+aforementioned.
 
 % Why would we need such a tool and who would you expect to use it and benefit from it?
 \section{Purpose}
@@ -37,7 +46,7 @@ long waits on Friday nights? A reviewer may point that out, but you can't always
 then it isn't taken into account.
 \\ \\
 FootTraffic, however, doesn't leave this information out. We take data from FourSquare checkins, allowing
-us to guage popularity during times of the day and year. Stuck waiting for a table at a TexMex restaurant
+us to gauge popularity during times of the day and year. Stuck waiting for a table at a TexMex restaurant
 and wishing you could find another one close-by that is still rated well and known to be less busy at
 that time of day? We can help you with that! Looking for the local hotspots at night? We can find them for you.  
 \\ \\
@@ -48,8 +57,8 @@ based on popularity for current or future dates, allowing them to find the locat
 \\ \\
 The main challenge we face in building FootTraffic is figuring out how best to weight our location data
 to determine overall popularity. Keeping such a large dataset with millions of locations and checkin
-data over the course of several years is not trivial, and querying it in a timely manner makes it more
-difficult. These problems are not new, however, and with the correct approach the amount of information is manageable.
+data over the course of several years is not trivial, and querying it in a timely manner makes it more difficult.
+These problems are not new, however, and with the correct approach the amount of information is manageable.
 \\ \\
 We have to pull in at least three sources of information: GoogleMaps data to determine the location (as
 well as review data), Yelp for restaurant ratings (easily swapped out or augmented with other rating

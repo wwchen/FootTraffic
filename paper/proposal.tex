@@ -38,33 +38,23 @@ aforementioned.
 % Why would we need such a tool and who would you expect to use it and benefit from it?
 \section{Purpose}
 % impact, need
-People love mapping and rating services. Looking for a specific genre of restaurant in your area with
-good prices and reviews? There's plenty of tools out there to help you out!
-\\ \\
-While this is useful information, you don't quite get the full picture. Does this restaurant have notoriously
-long waits on Friday nights? A reviewer may point that out, but you can't always count on it, and even
-then it isn't taken into account.
-\\ \\
-FootTraffic, however, doesn't leave this information out. We take data from FourSquare checkins, allowing
-us to gauge popularity during times of the day and year. Stuck waiting for a table at a TexMex restaurant
-and wishing you could find another one close-by that is still rated well and known to be less busy at
-that time of day? We can help you with that! Looking for the local hotspots at night? We can find them for you.  
-\\ \\
-Users can submit queries just like they would to Google Maps, using specific locations or addresses,
-or broad categories. We'll combine the Google results with information gathered from our database of
-FourSquare checkins as well as any number of rating services. We'll allow the user to sort their results
-based on popularity for current or future dates, allowing them to find the location that fits their needs best.
-\\ \\
-The main challenge we face in building FootTraffic is figuring out how best to weight our location data
-to determine overall popularity. Keeping such a large dataset with millions of locations and checkin
-data over the course of several years is not trivial, and querying it in a timely manner makes it more difficult.
-These problems are not new, however, and with the correct approach the amount of information is manageable.
-\\ \\
-We have to pull in at least three sources of information: GoogleMaps data to determine the location (as
-well as review data), Yelp for restaurant ratings (easily swapped out or augmented with other rating
-websites), as well as our database of FourSquare checkins. Returning relevant results to our users means
-processing this data and weighting our results in a manner that best represents their desires. It will
-take some trial and error to determine this.
+Adding a traffic-driven dimension to location-based searches serves many purposes, and to illustrate, below
+are some user-case scenarios:
+\begin{enumerate}
+\item Reviews are relevant to products, because their quality doesn't fluctuate, and availability (inventory) is
+reflected real-time. For venues like restaurants, a raving review dated a year ago doesn't mean the restaurant
+isn't infested with rats and ultimately closed down today. If we observe a plummet of checkins, we can
+make our results more relevant and up to date. 
+\item Suppose you are new to an area and you wish to see what bars in the local area airs the NFL football games.
+You can review the traffic graph for the local bars and correlate the previous game days with the at-peak checkins
+\item Tina and her friends are celebrating graduation, and they are looking for bars to hit late at night. What bars
+are at-peak and what bars will be at-peak when they arrive? \footnote{Example is taken from the paper}
+\item John has moved to a new area and would like to know which basketball courts have a similar traffic pattern
+like the one at home, so he can meet new friends. \footnotemark[\value{footnote}]
+\end{enumerate}
+A traffic-driven location-based search can easily handle these kind of queries that a rating- and review-based
+search cannot, whether it is by returning semantically correlated venues with similar traffic patterns, or by
+having traffic patterns to make a decision.
 
 % Would people care about the difference? How hard is it to build such a tool? What is the challenge?
 \section{Related Work}
@@ -72,9 +62,10 @@ take some trial and error to determine this.
 \section{Design and Methods}
 % How do you plan to build it?
 \subsection{Design Specifications}
-Since this a web application, we plan on using the Ruby on Rails framework. Not only will it allow us
+We plan on using the Ruby on Rails framework for several reasons. Not only will it allow us
 to rapidly build the web application, it provides an overall architecture for us to build the data processing
-on top of as well as an easy and somewhat transparent way to interact with our database. We plan on using
+on top of as well as an easy and somewhat transparent way to interact with our database. In addition, the MVC
+architecture makes modulization easy, and that is a huge advantage for us. We plan on using
 MariahDB, a fork of MySQL as our main database.
 
 % What existing resources can you use?
@@ -92,7 +83,22 @@ venues in a geographical map, and Yelp API to show restaurant reviews. Other API
 as we add more modules to different venues and categories.
 
 % How will you demonstrate the usefulness of your tool?
-\subsection{Broader Impact and Needs}
+\subsection{Design Envision and Challenges}
+Users can submit queries just like they would to Google Maps, using specific locations or addresses,
+or broad categories. We'll combine the Google results with information gathered from our database of
+FourSquare checkins as well as any number of rating services. We'll allow the user to sort their results
+based on popularity for current or future dates, allowing them to find the location that fits their needs best.
+\\ \\
+The main challenge we face in building FootTraffic is figuring out how best to weight our location data
+to determine overall popularity. Keeping such a large dataset with millions of locations and checkin
+data over the course of several years is not trivial, and querying it in a timely manner makes it more difficult.
+These problems are not new, however, and with the correct approach the amount of information is manageable.
+\\ \\
+We have to pull in at least three sources of information: GoogleMaps data to determine the location (as
+well as review data), Yelp for restaurant ratings (easily swapped out or augmented with other rating
+websites), as well as our database of FourSquare checkins. Returning relevant results to our users means
+processing this data and weighting our results in a manner that best represents their desires. It will
+take some trial and error to determine this.
 
 % A brief timeline including a description of what exactly you will show us at the Project Checkpoint
 \section{Management Plan}

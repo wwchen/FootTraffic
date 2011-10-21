@@ -57,8 +57,6 @@ search cannot, whether it is by returning semantically correlated venues with si
 having traffic patterns to make a decision.
 
 % Would people care about the difference? How hard is it to build such a tool? What is the challenge?
-\section{Related Work}
-
 \section{Design and Methods}
 % How do you plan to build it?
 \subsection{Design Specifications}
@@ -70,8 +68,7 @@ MariahDB, a fork of MySQL as our main database.
 
 % What existing resources can you use?
 \subsection{Development Resources}
-For our search engine, we will be reusing the FourSquare checkin data from the research paper
-\footnote{"Toward Traffic-Driven Location-Based Web Search" by Zhiyuan Cheng, James Caverlee, Krishna Y. Kamath, and Kyumin Lee, ACM 978-1-4503-0717-8/11/10},
+For our search engine, we will be reusing the FourSquare checkin data collected from the research paper
 which is 22 million checkins gathered from Twitter's public streaming, from October 2010 to January 2011. 
 The data can be publicly downloaded at \href{http://infolab.tamu.edu/static/users/zhiyuan/icwsm_2011.zip}{infolab.tamu.edu}.
 Using this dataset, we can extract a wealth of information, including location, time, category of the
@@ -81,46 +78,46 @@ integral piece that drives our search engine.
 In addition, in our preliminary brainstorm, we have decided to use Google Maps API to plot the different
 venues in a geographical map, and Yelp API to show restaurant reviews. Other APIs will possibly used
 as we add more modules to different venues and categories.
-
+\\ \\
+Last but not least, our class materials on optimization, indexing, evaluation, compression, and many more
+will prove invaluable.
+  
 % How will you demonstrate the usefulness of your tool?
-\subsection{Design Envision and Challenges}
+\subsection{Design Envision}
 Users can submit queries just like they would to Google Maps, using specific locations or addresses,
 or broad categories. We'll combine the Google results with information gathered from our database of
-FourSquare checkins as well as any number of rating services. We'll allow the user to sort their results
+FourSquare checkins as well as any number of rating services. We will allow the user to sort their results
 based on popularity for current or future dates, allowing them to find the location that fits their needs best.
-\\ \\
-The main challenge we face in building FootTraffic is figuring out how best to weight our location data
-to determine overall popularity. Keeping such a large dataset with millions of locations and checkin
-data over the course of several years is not trivial, and querying it in a timely manner makes it more difficult.
-These problems are not new, however, and with the correct approach the amount of information is manageable.
-\\ \\
-We have to pull in at least three sources of information: GoogleMaps data to determine the location (as
-well as review data), Yelp for restaurant ratings (easily swapped out or augmented with other rating
-websites), as well as our database of FourSquare checkins. Returning relevant results to our users means
-processing this data and weighting our results in a manner that best represents their desires. It will
-take some trial and error to determine this.
+
+\subsection{Design Challenges}
+The main challenge we face, like any search engine, is relevancy and speed (optimization). In building FootTraffic,
+we want to weigh our deciding factors (location, review, traffic, time, semantic relations, etc) at the optimal 
+balance, and it may differ for the different types of queries. Also, keeping such a large dataset with millions
+of locations and checkin data over the course of several years is not trivial, and querying it in a timely and
+efficient manner makes it even more difficult. These problems are not new, however with the correct approach,
+the amount of information is manageable.
 
 % A brief timeline including a description of what exactly you will show us at the Project Checkpoint
 \section{Management Plan}
 \subsection{Roles}
 To manage our time successfully, we have set a private Git repository on GitHub to manage our codebase. 
 We plan to meet at least twice a week and continually have dialogues via IRC. We will split development
-and documentation responsibilites equally.
+and documentation responsibilities equally.
 
 \subsection{Schedule of tasks}
 \begin{tabular}{|l|l|l|}
 \hline
   & Tasks                             & Due Date   \\ \hline
-- & Submit proposal                   & 10/21/2011 \\
-- & Proposal feedback                 & 10/27/2011 \\
-> & Complete Milestone Jog            & 10/30/2011 \\
-> & Complete Milestone Hurdling       & 11/15/2011 \\
-- & Project checkpoint                & 11/15/2011 \\
-- & Two slides                        & 11/22/2011 \\
-> & Complete Milestone Sprint         & 11/27/2011 \\
-- & Finish in-class presentation      & 11/29/2011 \\
-> & Complete Milestone Run            & 12/10/2011 \\
-- & Finish executive summary + demo   & 12/12/2011 \\
+1 & Submit proposal                   & 10/21/2011 \\
+2 & Proposal feedback                 & 10/27/2011 \\
+- & Complete Milestone Walk           & 10/30/2011 \\
+- & Complete Milestone Jog            & 11/15/2011 \\
+3 & Project checkpoint                & 11/15/2011 \\
+4 & Two slides                        & 11/22/2011 \\
+- & Complete Milestone Sprint         & 11/27/2011 \\
+5 & Finish in-class presentation      & 11/29/2011 \\
+- & Complete Milestone Run            & 12/10/2011 \\
+6 & Finish executive summary + demo   & 12/12/2011 \\
 \hline
 \end{tabular}
 

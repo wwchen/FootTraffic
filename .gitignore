@@ -3,3 +3,4 @@ paper/*.aux
 paper/*.out
 *.swp
 app/Gemfile.lock
+app/log/*.log

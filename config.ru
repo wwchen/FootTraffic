@@ -4,6 +4,7 @@
 WEBSITE_SUBDIR = 'app'
 
 #require ::File.expand_path('../config/environment',  __FILE__)
-require ::File.expand_path("#{WEBSITE_SUBDIR}/config/environment",  __FILE__)
+#require ::File.expand_path("#{WEBSITE_SUBDIR}/config/environment",  __FILE__)
+require "#{WEBSITE_SUBDIR}/config/environment"
 
 run FootTraffic::Application

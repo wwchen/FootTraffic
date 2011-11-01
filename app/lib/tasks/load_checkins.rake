@@ -16,7 +16,6 @@ namespace :db do
             :latitude  => data[2].strip,
             :longitude => data[3].strip,
             :created   => DateTime.parse(data[4]),
-            :text      => data[5].strip,
             :place_id  => data[6].strip
           )
           checkin.save

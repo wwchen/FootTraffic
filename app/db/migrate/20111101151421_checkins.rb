@@ -8,6 +8,7 @@ class Checkins < ActiveRecord::Migration
       t.date   :created
       t.string :text
       t.string :place_id
+      t.timestamps
     end
   end
 

@@ -4,3 +4,4 @@ paper/*.out
 *.swp
 app/Gemfile.lock
 app/log/*.log
+*.sqlite3

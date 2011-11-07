@@ -10,15 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111101210455) do
+ActiveRecord::Schema.define(:version => 20111107185432) do
 
   create_table "checkins", :force => true do |t|
-    t.string "user_id"
-    t.string "tweet_id"
-    t.string "latitude"
-    t.string "longitude"
-    t.date   "created"
-    t.string "place_id"
+    t.string   "user_id"
+    t.string   "tweet_id"
+    t.string   "latitude"
+    t.string   "longitude"
+    t.string   "place_id"
+    t.datetime "created"
   end
 
 end

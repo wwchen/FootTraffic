@@ -2,6 +2,7 @@ paper/*.log
 paper/*.aux
 paper/*.out
 *.swp
-app/Gemfile.lock
-app/log/*.log
+Gemfile.lock
+log/*.log
 *.sqlite3
+tmp/*

@@ -1,4 +1,4 @@
-require 'open-uri'
+require 'net/http'
 
 class Location < ActiveRecord::Base
   serialize :daily
@@ -14,8 +14,9 @@ class Location < ActiveRecord::Base
   # Class method for getting JSON from the Twitter API
   # for a location specified by a twitter_id
   def self.get_twitter_data(twitter_id)
-    req = open("http://api.twitter.com/1/geo/id/#{twitter_id}.json")
-    loc_data = ActiveSupport::JSON.decode(req.read)
+    url = "http://api.twitter.com/1/geo/id/#{twitter_id}.json"
+    req = Net::HTTP.get(URI(url))
+    loc_data = ActiveSupport::JSON.decode(req.body)
 
     return loc_data
   end

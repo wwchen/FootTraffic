@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111107185432) do
+ActiveRecord::Schema.define(:version => 20111113192309) do
 
   create_table "checkins", :force => true do |t|
     t.string   "user_id"
@@ -18,7 +18,23 @@ ActiveRecord::Schema.define(:version => 20111107185432) do
     t.string   "latitude"
     t.string   "longitude"
     t.string   "place_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "created"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "twitter_id"
+    t.string   "name"
+    t.string   "latitude"
+    t.string   "longitude"
+    t.string   "daily"
+    t.string   "weekly"
+    t.string   "annually"
+    t.string   "bounding_box"
+    t.string   "place_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

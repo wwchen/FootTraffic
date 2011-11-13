@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  twitter_id: MyString
+  name: MyString
+  latitude: MyString
+  longitude: MyString
+  daily: MyString
+  weekly: MyString
+  annually: MyString
+  bounding_box: MyString
+  place_type: MyString
+
+two:
+  twitter_id: MyString
+  name: MyString
+  latitude: MyString
+  longitude: MyString
+  daily: MyString
+  weekly: MyString
+  annually: MyString
+  bounding_box: MyString
+  place_type: MyString

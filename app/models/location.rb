@@ -42,4 +42,31 @@ class Location < ActiveRecord::Base
     return data
   end
 
+  # Average traffic pattern 'a' with the daily t-pat
+  def update_daily(a)
+    updated = Location.update_pattern(self.daily, a)
+    self.daily = updated unless !updated
+    self.save!
+  end
+
+  # Average traffic pattern 'a' with the weekly t-pat
+  def update_weekly(a)
+    updated = Location.update_pattern(self.weekly, a)
+    self.weekly = updated unless !updated
+    self.save!
+  end
+
+  # Average traffic pattern 'a' with the annual t-pat
+  def update_annually(a)
+    updated = Location.update_pattern(self.annually, a)
+    self.annually = updated unless !updated
+    self.save!
+  end
+  
+  # Given two traffic patterns, averages them together
+  def self.update_pattern(pattern, a)
+    return nil unless pattern.size == a.size
+    pattern.zip(a).map { |i| i.sum / 2.0 }
+  end
+
 end

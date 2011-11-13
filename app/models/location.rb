@@ -42,6 +42,14 @@ class Location < ActiveRecord::Base
     return data
   end
 
+  # Update all patterns; requires a hash of the form:
+  # { :daily => [], :weekly => [], :annually => [] }
+  def update_patterns(patterns)
+    self.update_daily(patterns[:daily])
+    self.update_weekly(patterns[:weekly])
+    self.update_annually(patterns[:annually])
+  end
+
   # Average traffic pattern 'a' with the daily t-pat
   def update_daily(a)
     updated = Location.update_pattern(self.daily, a)

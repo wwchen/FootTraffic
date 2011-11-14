@@ -1,4 +1,5 @@
 require 'net/http'
+require 'twitter_request'
 
 class Location < ActiveRecord::Base
   serialize :daily
@@ -11,36 +12,25 @@ class Location < ActiveRecord::Base
   validates :weekly,   :length => { :is => 7   }
   validates :annually, :length => { :is => 365 }
 
-  # Class method for getting JSON from the Twitter API
-  # for a location specified by a twitter_id
-  def self.get_twitter_data(twitter_id)
-    url = "http://api.twitter.com/1/geo/id/#{twitter_id}.json"
-    req = Net::HTTP.get(URI(url))
-    loc_data = ActiveSupport::JSON.decode(req.body)
+  def before_validation
+    self.daily    ||= Array.new(24).fill(0)
+    self.weekly   ||= Array.new(7).fill(0)
+    self.annually ||= Array.new(365).fill(0)
 
-    return loc_data
+    import_twitter
   end
 
-  # Instance method for getting location data for an instance
-  # of the Location model (which already has a twitter_id)
-  def twitter_data
-    return Location.get_twitter_data(self.twitter_id)
-  end
+  def import_twitter
+    data = TwitterRequest::location(self.twitter_id)
+    if(data)
+      self.name         = data['full_name']
+      self.bounding_box = data['bounding_box']
+      self.place_type   = data['place_type']
 
-  # We have an ID, so go ahead and populate the instance with data
-  # that we grabbed from Twitter
-  def populate_twitter
-    data = self.twitter_data
-
-    self.name         = data['full_name']
-    self.bounding_box = data['bounding_box']
-    self.place_type   = data['place_type']
-
-    self.daily    = Array.new(24).fill(0)
-    self.weekly   = Array.new(7).fill(0)
-    self.annually = Array.new(365).fill(0)
-
-    return data
+      return true
+    else
+      return false
+    end
   end
 
   # Update all patterns; requires a hash of the form:

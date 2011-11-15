@@ -1,0 +1,56 @@
+%
+% Project proposal
+% Guidelines can be found at: http://courses.cse.tamu.edu/caverlee/csce470/project.html
+% 
+\documentclass{article}
+\renewcommand{\contentsname}{Table of Contents}
+\newcommand{\PaperTitle}{Checkpoint}
+\usepackage{hyperref}
+%\usepackage{fullpage}
+
+\begin{document}
+
+%
+% Title Page
+\input{titlepage.tex}
+
+%
+% Document
+\section{Milestone Walk}
+We set out a base set of technologies and resources we want to use, and in this milestone, we installed,
+configured, and learned them more in-depth so we can use them appropriately. We were off on a slow start,
+and that was expected. We didn't cover much ground code-wise, but we do have the environment set up. We have
+requested an edu account on GitHub for private repos, set up a production site on Heroku, toyed with 
+Amazon EC2, looked into Google, Yelp, and Twitter APIs, considered (considering) Apache Lucene,
+and installing and gaining traction with Ruby on Rails. 
+
+\section{Milestone Jog}
+During this milestone, we planned out our backend strategy and briefly brainstormed how the UI looks like and 
+what features we should include/concentrate on. There are many uses for a traffic-pattern based searches, but 
+right now we are limiting ourselves with the scenario where you would like to find similar
+\footnote{Similarity is based on a combination of traffic-pattern and category. Relevancy is based on  
+geospatial location radius} venues in the surrounding area. \\ \\
+In addition, we have kicked off a parser that iterates through a 22 million lines of data, provided
+by the research paper, into a sqlite3 database. The conversion took about a week, and the database
+size is around 3 GB. For the sake of developments and efficiency, we might have to port over to a MySQL
+database.
+
+\subsection{Backend Approach}
+There will be two databases for storing incoming tweets from Foursquare and for storing
+location/venue data. \verb|Checkins| database will serve as a buffer between a script that is rate-limited
+(to conform with Twitter API) and a tweet processor. In other words, the script will dump all the relevant 
+tweets it can scrape into the \verb|Checkins| database, and on the other side, a processor will parse and
+add additional information to the tweet, which is explained in the next part. \\ \\
+If the \verb|Checkins| database is not empty, the processor reads every tweet, parses it, fetch
+additional information, and adds it to the second database, \verb|locations|. Every location has an
+unique ID from Twitter, and we use that to query the \verb|locations| database. If such location
+exists, append the traffic and recompute the pattern. If not, start off parallel threads to
+third-party APIs and fetch all the information there is on that location. For example, we ask Google
+what the category, address, name, boundary box (for drawing on maps), and etc. If the location is a
+restaurant, we can ask Yelp for reviews, ratings, hours of operations, and such. \\ \\
+
+\section{Other Thoughts}
+If you would like to fork our private Github repo, something can be arranged.
+
+\end{document}
+

@@ -18,7 +18,8 @@ class TwitterRequest
       # continue pounding their servers.
       reset = resp['X-RateLimit-Reset']
       if(reset)
-        sleep(Time.at(reset) - Time.now)
+        #sleep(Time.at(reset) - Time.now)
+        railse self.RateLimitException.new(reset)
       else
         sleep(30)
       end
@@ -31,6 +32,14 @@ class TwitterRequest
       return self.location(id, attempt-1)
     else
       return nil
+    end
+  end
+
+  class RateLimitException < Exception
+    attr_reader :reset_time
+
+    def initialize(reset_time)
+      @reset_time = reset_time
     end
   end
 end

@@ -10,6 +10,8 @@ gem 'pg'
 
 gem 'sunspot_rails'
 
+gem 'delayed_job'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

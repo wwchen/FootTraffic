@@ -78,8 +78,7 @@ class GooglePlaces
       if(status == 'OK')
         return json
       elsif(status == 'OVER_QUERY_LIMIT')
-        # TODO: Figure out something useful to do here...
-        sleep(1000)
+        raise self.RateLimitException
       else
         # Zoinks! We need to retry the request...
         self.get(url, attempt-1)
@@ -87,5 +86,8 @@ class GooglePlaces
     else
       return nil
     end
+  end
+
+  class RateLimitException < Exception
   end
 end

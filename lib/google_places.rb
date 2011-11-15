@@ -47,7 +47,7 @@ class GooglePlaces
     if(!reference) then return nil end
     url = 'https://maps.googleapis.com/maps/api/place/details/json?'
     url += "key=#{@api_key}&"
-    url += "references=#{reference}&"
+    url += "reference=#{reference}&"
     url += "sensor=false"
 
     return self.get(url)
@@ -75,7 +75,7 @@ class GooglePlaces
     if(code == 200)
       json = ActiveSupport::JSON.decode(response.body)
       status = json['status']
-      if(status != 'OK')
+      if(status == 'OK')
         return json
       elsif(status == 'OVER_QUERY_LIMIT')
         # TODO: Figure out something useful to do here...

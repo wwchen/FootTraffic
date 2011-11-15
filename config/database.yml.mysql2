@@ -1,0 +1,23 @@
+development:
+  adapter: mysql
+  database: foottraffic_dev
+  username: foot
+  password: wwk3I12yHyI3Rltc7AeqKSgQy
+  host: iamchen.com
+  timeout: 5000
+
+test:
+  adapter: mysql
+  database: foottraffic_test
+  username: foot
+  password: wwk3I12yHyI3Rltc7AeqKSgQy
+  host: iamchen.com
+  timeout: 5000
+
+production:
+  adapter: mysql
+  database: foottraffic_prod
+  username: foot
+  password: wwk3I12yHyI3Rltc7AeqKSgQy
+  host: iamchen.com
+  timeout: 5000

@@ -19,11 +19,11 @@ class GoogleSearchJob < Struct.new(:location_id)
 
       reference = result['results'].first['reference']
 
-      Delayed::Job.enqueue(GoogleDetailsJob.new(location_id, reference))
+      Delayed::Job.enqueue(GoogleDetailsJob.new(location_id, reference), 1)
 
     rescue GooglePlaces::RateLimitException
       # Requeue the job so we can try it later
-      Delayed::Job.enqueue(GoogleSearchJob.new(location_id))
+      Delayed::Job.enqueue(GoogleSearchJob.new(location_id), 0, 1.hour.from_now)
     end
   end
 end

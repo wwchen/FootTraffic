@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111114005341) do
+ActiveRecord::Schema.define(:version => 20111117205138) do
 
   create_table "checkins", :force => true do |t|
     t.string   "user_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20111114005341) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "created"
+    t.boolean  "processed"
   end
 
   create_table "locations", :force => true do |t|

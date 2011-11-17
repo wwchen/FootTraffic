@@ -2,22 +2,28 @@
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 
-common: &common
-  adapter: postgresql
-  username: foottraffic
-  password: fetooVahf3
-#  host: ftec2.iamchen.com
-  host: ec2-72-44-36-121.compute-1.amazonaws.com
-  encoding: UTF8
-
 development:
-  <<: *common
-  database: ft_development
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
 
-test:
-  <<: *common
-  database: ft_test
-
-production:
-  <<: *common
-  database: ft_production
+#common: &common
+#  adapter: postgresql
+#  username: foottraffic
+#  password: fetooVahf3
+##  host: ftec2.iamchen.com
+#  host: ec2-72-44-36-121.compute-1.amazonaws.com
+#  encoding: UTF8
+#
+#development:
+#  <<: *common
+#  database: ft_development
+#
+#test:
+#  <<: *common
+#  database: ft_test
+#
+#production:
+#  <<: *common
+#  database: ft_production

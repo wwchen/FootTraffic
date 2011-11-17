@@ -4,5 +4,4 @@ paper/*.out
 *.swp
 Gemfile.lock
 log/*.log
-*.sqlite3
 tmp/*

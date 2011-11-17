@@ -24,14 +24,29 @@ ActiveRecord::Schema.define(:version => 20111117205138) do
     t.boolean  "processed"
   end
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "locations", :force => true do |t|
     t.string   "twitter_id"
     t.string   "name"
     t.string   "latitude"
     t.string   "longitude"
-    t.string   "daily"
-    t.string   "weekly"
-    t.string   "annually"
+    t.text     "daily",        :limit => 255
+    t.text     "weekly",       :limit => 255
+    t.text     "annually",     :limit => 255
     t.string   "bounding_box"
     t.string   "place_type"
     t.datetime "created_at"

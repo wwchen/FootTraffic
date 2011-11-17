@@ -12,8 +12,7 @@ development:
 #  adapter: postgresql
 #  username: foottraffic
 #  password: fetooVahf3
-##  host: ftec2.iamchen.com
-#  host: ec2-72-44-36-121.compute-1.amazonaws.com
+#  host: iamchen.com
 #  encoding: UTF8
 #
 #development:

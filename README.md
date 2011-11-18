@@ -1,5 +1,8 @@
 FootTraffic
 ==============
+
+##We Are For Real™
+
 by William Chen and Eric Wood
 for Dr. Caverlee's CSCE 470 course at Texas A&M University
 

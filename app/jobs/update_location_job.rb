@@ -49,7 +49,7 @@ class UpdateLocationJob < Struct.new(:place_id)
       query = {
         :latitude => location.latitude,
         :longitude => location.longitude,
-        :radius => 100
+        :radius => 1000
       }
 
       puts "Performing Google search..."

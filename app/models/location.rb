@@ -39,6 +39,7 @@ class Location < ActiveRecord::Base
   # for each one and kicks off the Location creation process.
   def self.process_checkins(loc_ids)
     # Hash with location ID as key and list of DateTimes as values
+<<<<<<< HEAD
     loc_ids.each do |id|
       # While we're iterating over stuff, go ahead and mark all of these as "processed"
       checkins = Checkin.where(:place_id => id, :processed => nil)
@@ -50,10 +51,25 @@ class Location < ActiveRecord::Base
 
       times = checkins.map { |i| i.created }
       times.each do |time|
+=======
+    h = loc_ids.map { |i| [i, Checkin.where(:place_id => i).map { |j| j.created }] }
+    temporal = Hash[h]
+    p temporal
+    
+    daily    = []
+    weekly   = []
+    annually = []
+
+    # Generate the traffic patterns
+    temporal.each do |id,times|
+      times.each do |time|
+        p time
+>>>>>>> ab4b551dcad2a2dd32d60a59bc68e103d2e36ff5
         daily    << (0..23).to_a.map   { |i| if(time.hour == i) then 1 else 0 end }
         weekly   << (0..6).to_a.map    { |i| if(time.wday == i) then 1 else 0 end }
         annually << (0..365).to_a.map  { |i| if(time.yday == i) then 1 else 0 end }
       end
+<<<<<<< HEAD
       
       # Hooray, now we have traffic patterns for this batch!
       daily_pat  = self.matrix_average(daily)
@@ -61,6 +77,13 @@ class Location < ActiveRecord::Base
       annual_pat = self.matrix_average(annually)
     end
 
+=======
+    end
+
+    daily_pat  = self.matrix_average(daily)
+    weekly_pat = self.matrix_average(weekly)
+    annual_pat = self.matrix_average(annually)
+>>>>>>> ab4b551dcad2a2dd32d60a59bc68e103d2e36ff5
   end
 
   # Given an array of arrays, return an array with the average

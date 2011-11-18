@@ -19,7 +19,7 @@ class Location < ActiveRecord::Base
     self.weekly   ||= Array.new(7).fill(0)
     self.annually ||= Array.new(365).fill(0)
 
-    import_twitter
+    #import_twitter
   end
 
   def import_twitter

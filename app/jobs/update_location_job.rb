@@ -1,4 +1,6 @@
-class UpdateLocation < Struct.new(:place_id)
+require 'google_places'
+
+class UpdateLocationJob < Struct.new(:place_id)
   def perform
     checkins = Checkin.where(:place_id => place_id, :processed => nil)
     puts "Processing #{checkins.count} checkins..."
@@ -11,10 +13,10 @@ class UpdateLocation < Struct.new(:place_id)
       time = checkin.created
       daily    << (0..23).to_a.map   { |i| if(time.hour == i) then 1 else 0 end }
       weekly   << (0..6).to_a.map    { |i| if(time.wday == i) then 1 else 0 end }
-      annually << (0..365).to_a.map  { |i| if(time.yday == i) then 1 else 0 end }
+      annually << (0..364).to_a.map  { |i| if(time.yday == i) then 1 else 0 end }
 
-      #checkin.processed = true
-      #checkin.save!
+      checkin.processed = true
+      checkin.save!
     end
 
     pats = {
@@ -33,17 +35,31 @@ class UpdateLocation < Struct.new(:place_id)
       c = checkins.first
       location = Location.new do |l|
         l.twitter_id = place_id
-        l.latitude = c.latitude
-        l.longitude = c.longitude
-        l.daily = pats[:daily]
-        l.weekly = pats[:weekly]
-        l.annually = pats[:annually]
+        l.latitude   = c.latitude
+        l.longitude  = c.longitude
+        l.daily      = pats[:daily]
+        l.weekly     = pats[:weekly]
+        l.annually   = pats[:annually]
       end
 
       # TODO: Some kind of error checking would be nice...
       location.save!
 
       # Now kick off a few jobs to populate other fields
+      query = {
+        :latitude => location.latitude,
+        :longitude => location.longitude,
+        :radius => 100
+      }
+
+      puts "Performing Google search..."
+      search = GooglePlaces.search(query)
+      p search
+      puts ""
+      reference = search['results'].first['reference']
+      puts "Getting additional place details from Google... [ #{search['reference']} ]"
+      details = GooglePlaces.place_details(reference)
+      p details
     end
   end
 end

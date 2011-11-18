@@ -2,6 +2,8 @@ require 'net/http'
 require 'twitter_request'
 
 class Location < ActiveRecord::Base
+  acts_as_taggable
+
   serialize :daily
   serialize :weekly
   serialize :annually
@@ -37,27 +39,28 @@ class Location < ActiveRecord::Base
   # for each one and kicks off the Location creation process.
   def self.process_checkins(loc_ids)
     # Hash with location ID as key and list of DateTimes as values
-    h = loc_ids.map { |i| [i, Checkin.where(:place_id => i).map { |j| j.created }] }
-    temporal = Hash[h]
-    p temporal
-    
-    daily    = []
-    weekly   = []
-    annually = []
+    loc_ids.each do |id|
+      # While we're iterating over stuff, go ahead and mark all of these as "processed"
+      checkins = Checkin.where(:place_id => id, :processed => nil)
+      checkins.each { |x| x.processed = true; x.save! }
 
-    # Generate the traffic patterns
-    temporal.each do |id,times|
+      daily    = []
+      weekly   = []
+      annually = []
+
+      times = checkins.map { |i| i.created }
       times.each do |time|
-        p time
         daily    << (0..23).to_a.map   { |i| if(time.hour == i) then 1 else 0 end }
         weekly   << (0..6).to_a.map    { |i| if(time.wday == i) then 1 else 0 end }
         annually << (0..365).to_a.map  { |i| if(time.yday == i) then 1 else 0 end }
       end
+      
+      # Hooray, now we have traffic patterns for this batch!
+      daily_pat  = self.matrix_average(daily)
+      weekly_pat = self.matrix_average(weekly)
+      annual_pat = self.matrix_average(annually)
     end
 
-    daily_pat  = self.matrix_average(daily)
-    weekly_pat = self.matrix_average(weekly)
-    annual_pat = self.matrix_average(annually)
   end
 
   # Given an array of arrays, return an array with the average

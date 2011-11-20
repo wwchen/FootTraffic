@@ -73,6 +73,8 @@ class GooglePlaces
   def self.get(url, attempt=10)
     return nil unless attempt >= 0
 
+    puts "Requesting (#{10 - attempt + 1}/10):\n#{url}"
+
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
 

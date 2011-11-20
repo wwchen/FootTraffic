@@ -55,16 +55,7 @@ class UpdateLocationJob < Struct.new(:place_id)
         :name => location.name
       }
 
-      #puts "Performing Google search..."
-      #search = GooglePlaces.search(query)
-      #p search
-      #puts ""
-      #reference = search['results'].first['reference']
-      #puts "Getting additional place details from Google... [ #{search['reference']} ]"
-      #details = GooglePlaces.place_details(reference)
-      #p details
-
-      #Delayed::Job.enqueue(GoogleSearchJob.new(location.id))
+      Delayed::Job.enqueue(GoogleSearchJob.new(location.id))
     end
   end
 end

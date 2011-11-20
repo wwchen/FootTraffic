@@ -8,6 +8,7 @@ class Location < ActiveRecord::Base
   serialize :weekly
   serialize :annually
   serialize :bounding_box
+  serialize :types
 
   validates :twitter_id, :uniqueness => true
   validates :daily,    :length => { :is => 24  }
@@ -23,6 +24,8 @@ class Location < ActiveRecord::Base
   end
 
   def import_twitter
+    # TODO: if we end up using this, make it handle the 
+    # RateLimit exception thrown by TwitterReqeust
     data = TwitterRequest::location(self.twitter_id)
     if(data)
       self.name         = data['full_name']

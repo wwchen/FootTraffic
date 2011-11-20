@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117211633) do
+ActiveRecord::Schema.define(:version => 20111120034650) do
 
   create_table "checkins", :force => true do |t|
     t.string   "user_id"
@@ -42,8 +42,6 @@ ActiveRecord::Schema.define(:version => 20111117211633) do
   create_table "locations", :force => true do |t|
     t.string   "twitter_id"
     t.string   "name"
-    t.string   "latitude"
-    t.string   "longitude"
     t.text     "daily",        :limit => 255
     t.text     "weekly",       :limit => 255
     t.text     "annually",     :limit => 255
@@ -51,6 +49,15 @@ ActiveRecord::Schema.define(:version => 20111117211633) do
     t.string   "place_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "address"
+    t.string   "phone"
+    t.string   "icon"
+    t.float    "rating"
+    t.string   "types"
+    t.string   "url"
+    t.string   "website"
   end
 
   create_table "taggings", :force => true do |t|

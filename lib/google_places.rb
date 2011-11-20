@@ -24,6 +24,20 @@ class GooglePlaces
       return nil
     end
 
+    # Any rules for escaping incoming strings can go here
+    escape = lambda do |s|
+      if s
+        s.gsub!('&', 'and') # This little guy is quite a troublemaker...
+        s = CGI.escape(s)   # THIS MUST BE THE LAST ONE, MK?
+        s                   # Keep in mind the last value is what gets used...
+      end
+    end
+
+    keyword = escape.call(query[:keyword])
+    name    = escape.call(query[:name])
+    types   = escape.call(query[:types])
+    radius  = escape.call(query[:radius].to_s)
+
     # A quick note about URI escaping...
     # Why use CGI.escape instead of URI.escape?
     # CGI.escape does EVERYTHING, while URI.escape leaves in
@@ -32,10 +46,12 @@ class GooglePlaces
     url += "key=#{@api_key}"
     url += "&location=#{query[:latitude]},#{query[:longitude]}"
     url += "&sensor=false"
-    url += "&radius=#{CGI.escape(query[:radius].to_s)}"
-    url += "&keyword=#{CGI.escape(query[:keyword])}" unless !query[:keyword]
-    url += "&name=#{CGI.escape(query[:name])}" unless !query[:name]
-    url += "&types=#{query[:types].map {|i| CGI.escape(i)}.join('|')}" unless !query[:types]
+    url += "&radius=#{radius}"
+    url += "&keyword=#{keyword}" unless !keyword
+    url += "&name=#{name}" unless !name
+    url += "&types=#{types.map(&escape).join('|')}" unless !types
+
+    p query
     
     return self.get(url)
   end
@@ -79,11 +95,15 @@ class GooglePlaces
         return json
       elsif(status == 'OVER_QUERY_LIMIT')
         raise self.RateLimitException
+      elsif(status == "ZERO_RESULTS")
+        puts "No results found."
+        return nil
       else
         # Zoinks! We need to retry the request...
         self.get(url, attempt-1)
       end
     else
+      puts "Unknown HTTP code #{code}"
       return nil
     end
   end

@@ -1,0 +1,100 @@
+p.count
+p.sum
+Checkin.first.created
+Location.find_by_twitter_id('asdfasdf')
+def foo(bar)
+p bar
+end
+foo(:a => 1, :b => 2)
+GooglePlaces
+Checkin.count
+require 'geokit'
+Location.first.nearbys
+Checkin
+require 'twitter_request'
+TwitterRequest.location('dea1eac2d7ef8878')
+reload!
+Locatoin
+Location
+TwitterRequest.location('568bfb78df45821a')
+Jobs
+Job
+require 'google_places'
+GooglePlaces.search({:latitude=>38.9335, :longitude=>-77.0724, :radius=>1000, :name=>"Cleveland Park"})
+GooglePlaces.search({:latitude=>38.9306, :longitude=>-77.0377, :radius=>1000, :keyword=>"Tonic Restaurant & Bar, Washington"})
+GooglePlaces.search({:latitude=>38.9306, :longitude=>-77.0377, :radius=>1000, :keyword=>"Tonic Restaurant Bar, Washington"})
+'asdfsd & asdfasdf'.replace('&', 'and')
+'asdfsd & asdfasdf'.gsub('&', 'and')
+escape = lambda { |i| i.gsub!('&', 'and') }
+escape = lambda { |i| i += ' hello'; i.gsub!('&', 'and') }
+escape.call('asdf & asdfasdf')
+['1', '&', '4'].map escape
+['1', '&', '4'].map :escape
+escape = lambda { |i| i += ' hello'; i.gsub!('&', 'and'); i }
+['1', '&', '4'].map &escape
+GoogleDetailsJob.new('CmReAAAA2QeibctBxKdYC_9GUOlW6SBl7M7QZKE6pX_nVm2d1LF0ZoELNeUVxqZkW-LxJNoobIoM1jBvSY16TUahBZCpYhlVX1GRrRKXUn7IKabCJsvnH4ZCoIFOxg3eOcS3KsW4EhD3A8h-eqvSt6xmp3sXg6IdGhS3LhjPeTByfzRvDR_yv3AqylyntA').perform
+h = {"html_attributions"=>[], "result"=>{"address_components"=>[{"long_name"=>"5707", "short_name"=>"5707", "types"=>["street_number"]}, {"long_name"=>"North Clark Street", "short_name"=>"North Clark Street", "types"=>["route"]}, {"long_name"=>"Chicago", "short_name"=>"Chicago", "types"=>["locality", "political"]}, {"long_name"=>"Cook", "short_name"=>"Cook", "types"=>["administrative_area_level_2", "political"]}, {"long_name"=>"IL", "short_name"=>"IL", "types"=>["administrative_area_level_1", "political"]}, {"long_name"=>"US", "short_name"=>"US", "types"=>["country", "political"]}, {"long_name"=>"60660", "short_name"=>"60660", "types"=>["postal_code"]}], "formatted_address"=>"5707 North Clark Street, Chicago, IL 60660, United States", "formatted_phone_number"=>"(773) 561-1600", "geometry"=>{"location"=>{"lat"=>41.985645, "lng"=>-87.669138}}, "icon"=>"http://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png", "id"=>"581aeab70cf7053f34c08543285207dc232fa059", "international_phone_number"=>"+1 773-561-1600", "name"=>"M Henry", "rating"=>4.5, "reference"=>"CmReAAAAnkMQUTO25FEGJwUsKPsawhiGvS3_B2n-LM_Zz_UVkzsMU6fFWVZzefqcpFQjcceTg6PDuETDTu8kfCTQAuPEpL4PUpcb6A1kEacZ1zcS5xZxT_qOxsdly4GzMA5xDOzzEhBXWeGoaBMkB-D2cqP_JtGSGhSNscLLQi4Nm4yQMToe-bcYkCnB1A", "types"=>["restaurant", "food", "establishment"], "url"=>"http://maps.google.com/maps/place?cid=11158187056648709520", "vicinity"=>"5707 North Clark Street, Chicago", "website"=>"http://www.mhenry.net/"}, "status"=>"OK"}
+h['result']
+GoogleDetailsJob.new(Location.first.id, 'CmReAAAA2QeibctBxKdYC_9GUOlW6SBl7M7QZKE6pX_nVm2d1LF0ZoELNeUVxqZkW-LxJNoobIoM1jBvSY16TUahBZCpYhlVX1GRrRKXUn7IKabCJsvnH4ZCoIFOxg3eOcS3KsW4EhD3A8h-eqvSt6xmp3sXg6IdGhS3LhjPeTByfzRvDR_yv3AqylyntA').perform
+GoogleDetailsJob.new(Location.first.id,'CoQBcwAAAFUPj-MEnnpZNUdyq0WGX_w-TO11wGZ7iPwFfqb5e5CbHOIHTAxlO1EfCqYlMM2M23rdpvV07uajN68ckUHajTpF5zh_7nWoLlEVh0LK8W9PXeco12w27l9WMiftWMAlXa8izpxpHIqrPo0wLb_qkGBVwI9EtdI9ZaaRHxE4GYhUEhBULQ-TG8mKNdKbRZkMjbX0GhQYHjWHiOuHevl9-vENCRJ0kt-ZqQ').perform
+GoogleSearchJob.new(Location.first.id).perform
+GooglePlaces.search(:latitude=>41.485499, :longitude=>-81.799178, :radius=>1000, :keyword=>"Melt Bar and Grilled Lakewood")
+Location.first.icon
+require 'process_checkins_job'; Location.delete_all; ProcessCheckinsJob.new(1).perform
+UpdateLocationJob.new('1595675a3be2e80f').perform
+Location.first.url
+Location.first.rating
+Location.first.name
+Location.first.hourly
+Location.first.daily
+require 'open-uri'
+open('http://www.yelp.com/search?find_desc=Rock+and+Roll+Hall+of+Fame+Cleveland&ns=1#find_desc=Rock+and+Roll+Hall+of+Fame&find_loc=Cleveland').read
+require 'nokogiri'
+doc = Nokogiri::HTML.parse(open('http://www.yelp.com/biz/rock-and-roll-hall-of-fame-and-museum-cleveland').read)
+doc.xpath('//[@class="rating average"]')
+doc.xpath('//[class="rating average"]')
+Location.first
+require 'yelp_request'
+YelpRequest.search(58)
+require 'yelp_request'; YelpRequest.search(58)
+require 'yelp_request'; YelpRequest.details('res = Net::HTTP.start(uri.hostname, uri.port) {|http|
+  http.request(req)
+}
+require 'yelp_request'; YelpRequest.details(YelpRequest.search(58))
+require 'yelp_request'; YelpRequest.details(YelpRequest.search(63))
+Location.find_by_id(58)
+YelpSearchJob
+Checkin.where(:processed => nil)
+ProcessCheckinsJob.new(5).perform
+Location.last.tags
+Location.count
+l = Location.first
+l.tags
+l.tags << "hellp"
+l.tags += ["hellp"]
+l.tags = "asdf, asdfadsf"
+l.tag_list << "hellp"
+Location.delete_all
+ProcessCheckinsJob.new(10).perform
+Location.first.tags
+Location.first.tag_list
+Location.first.tag_list.join(', ')
+Location.first.types
+Location.all.map { |i| i.tags }
+Location.all.map { |i| i.tag_list }
+search = Sunspot.search(Location) { keywords ['Arts'] }
+search.results
+Sunspot.search(Location) { keywords ['Art'] }.results
+Sunspot.search(Location) { keywords ['restaurant'] }.results
+Sunspot.search(Location) { keywords ['Restaurant'] }.results
+Location.all
+Sunspot.search(Location) { keywords ['Knitting'] }.results
+Sunspot.search(Location) { keywords ['knitting In The Loop'] }.results
+Sunspot.search(Location) { keywords ['knitting In The Loop, Houston'] }.results
+Sunspot.search(Location) { keywords ['Knitting In The Loop, Houston'] }.results
+Sunspot.search(Location) { name ['Knitting In The Loop, Houston'] }.results
+Sunspot.search(Location) { keywords ['knitting'] }.results
+Sunspot.search(Location) { keywords ['Arts'] }.results
+Sunspot.search(Location) { keywords ['arts'] }.results
+Sunspot.search(Location) { keywords ['art'] }.results
+Location.reindex

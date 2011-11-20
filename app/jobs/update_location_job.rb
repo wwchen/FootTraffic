@@ -1,4 +1,6 @@
-require 'google_places'
+#require 'google_places'
+require 'google_search_job'
+require 'yelp_job'
 
 class UpdateLocationJob < Struct.new(:place_id)
   def perform
@@ -57,6 +59,7 @@ class UpdateLocationJob < Struct.new(:place_id)
         }
 
         Delayed::Job.enqueue(GoogleSearchJob.new(location.id))
+        Delayed::Job.enqueue(YelpSearchJob.new(location.id))
       end
     end
   end

@@ -11,9 +11,12 @@ gem 'pg'
 gem 'sunspot_rails'
 
 gem 'acts-as-taggable-on', '~>2.1.0'
+
 gem 'delayed_job'
 
 gem 'geocoder'
+
+gem 'nokogiri'
 
 # Use unicorn as the web server
 # gem 'unicorn'

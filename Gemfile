@@ -8,6 +8,7 @@ gem 'rails', '3.0.9'
 # Use postgresql
 gem 'pg'
 
+gem 'sunspot'
 gem 'sunspot_rails'
 
 gem 'acts-as-taggable-on', '~>2.1.0'
@@ -15,6 +16,8 @@ gem 'acts-as-taggable-on', '~>2.1.0'
 gem 'delayed_job'
 
 gem 'geocoder'
+#gem 'georuby'
+#gem 'spatial_adapter'
 
 gem 'nokogiri'
 

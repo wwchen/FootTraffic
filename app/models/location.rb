@@ -23,6 +23,32 @@ class Location < ActiveRecord::Base
     import_twitter
   end
 
+  searchable do
+    text   :name, :boost => 5.0
+    text   :place_type, :boost => 4.0
+    text   :address, :boost => 5.0
+    text   :website
+    string :twitter_id
+    string :phone
+    float  :rating
+
+    text :types
+    #text   :types do
+    #  self.types.join(', ')
+    #end
+
+    text :tag_list
+    #text   :tag_list do
+    #  tag_list.join(', ')
+    #end
+    
+    #location :coordinates
+  end
+
+  #def coordinates
+  #  Sunspot::Util::Coordinates.new(self.geom.y, self.geom.x)
+  #end
+
   def import_twitter
     # TODO: if we end up using this, make it handle the 
     # RateLimit exception thrown by TwitterReqeust

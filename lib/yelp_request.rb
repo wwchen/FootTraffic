@@ -1,6 +1,9 @@
 require 'nokogiri'
 require 'net/http'
 
+# NOTE: This code does not exist.
+# Carry on, Nothing to see here.
+
 class YelpRequest
   def self.search(loc_id)
     loc = Location.find_by_id(loc_id)

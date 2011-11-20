@@ -5,3 +5,4 @@ paper/*.out
 Gemfile.lock
 log/*.log
 tmp/*
+*.sqlite3

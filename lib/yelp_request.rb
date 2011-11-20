@@ -45,7 +45,9 @@ class YelpRequest
     resp = self.get(url)
 
     if resp
-      doc = Nokogiri::HTTP.parse(resp)
+      doc = Nokogiri::HTML.parse(resp)
+
+      results = Hash.new
 
       # Meow.
       results[:cats] = doc.css('#cat_display a').map { |cat| cat.text.strip }
@@ -77,6 +79,9 @@ class YelpRequest
     code = resp.code.to_i
     if(code == 200)
       return resp.body
+    elsif(code == 303)
+      puts "303 => redirecting..."
+      self.get(resp['Location'])
     else
       puts "Failed: response code => #{code}"
       # Will I regret this decision? At the very least it will give up...

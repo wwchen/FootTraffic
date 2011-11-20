@@ -6,3 +6,4 @@ Gemfile.lock
 log/*.log
 tmp/*
 *.sqlite3
+solr/data/*

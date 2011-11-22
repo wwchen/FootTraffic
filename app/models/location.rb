@@ -2,10 +2,13 @@ require 'net/http'
 require 'twitter_request'
 
 class Location < ActiveRecord::Base
+  acts_as_taggable
+
   serialize :daily
   serialize :weekly
   serialize :annually
   serialize :bounding_box
+  serialize :types
 
   validates :twitter_id, :uniqueness => true
   validates :daily,    :length => { :is => 24  }
@@ -17,10 +20,34 @@ class Location < ActiveRecord::Base
     self.weekly   ||= Array.new(7).fill(0)
     self.annually ||= Array.new(365).fill(0)
 
-    import_twitter
+    #import_twitter
   end
 
+  # Configure search options for Solr
+  searchable do
+    text   :name,       :boost => 5.0
+    text   :address,    :boost => 5.0
+    text   :place_type, :boost => 4.0
+    text   :types,      :boost => 4.0
+    text   :tag_list,   :boost => 3.0
+    text   :website
+    string :twitter_id
+    string :phone
+    float  :rating
+
+    
+    # TODO: only compatible with MySQL/Postgres,
+    # so we can't start debugging this locally.
+    #location :coordinates
+  end
+
+  #def coordinates
+  #  Sunspot::Util::Coordinates.new(self.geom.y, self.geom.x)
+  #end
+
   def import_twitter
+    # TODO: if we end up using this, make it handle the 
+    # RateLimit exception thrown by TwitterReqeust
     data = TwitterRequest::location(self.twitter_id)
     if(data)
       self.name         = data['full_name']
@@ -31,33 +58,6 @@ class Location < ActiveRecord::Base
     else
       return false
     end
-  end
-
-  # Given a batch of (unique) twitter location IDs, calculates the traffic patterns
-  # for each one and kicks off the Location creation process.
-  def self.process_checkins(loc_ids)
-    # Hash with location ID as key and list of DateTimes as values
-    h = loc_ids.map { |i| [i, Checkin.where(:place_id => i).map { |j| j.created }] }
-    temporal = Hash[h]
-    p temporal
-    
-    daily    = []
-    weekly   = []
-    annually = []
-
-    # Generate the traffic patterns
-    temporal.each do |id,times|
-      times.each do |time|
-        p time
-        daily    << (0..23).to_a.map   { |i| if(time.hour == i) then 1 else 0 end }
-        weekly   << (0..6).to_a.map    { |i| if(time.wday == i) then 1 else 0 end }
-        annually << (0..365).to_a.map  { |i| if(time.yday == i) then 1 else 0 end }
-      end
-    end
-
-    daily_pat  = self.matrix_average(daily)
-    weekly_pat = self.matrix_average(weekly)
-    annual_pat = self.matrix_average(annually)
   end
 
   # Given an array of arrays, return an array with the average

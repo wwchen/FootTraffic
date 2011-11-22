@@ -5,3 +5,8 @@ paper/*.out
 Gemfile.lock
 log/*.log
 tmp/*
+*.sqlite3
+
+solr/data
+*.lck
+*.pid

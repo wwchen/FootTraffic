@@ -58,7 +58,7 @@ TweetStream::Client.new.locations([-123,36,-121,38],
         :latitude   => status[:geo][:coordinates][0],
         :longitude  => status[:geo][:coordinates][1]
       )
-      puts status[:name], "is added"
+      prints status[:name], "is added"
     end
   end
 end

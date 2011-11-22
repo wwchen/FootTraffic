@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 require 'tweetstream'
 
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require File.expand_path('../../config/boot',  __FILE__)
+require APP_PATH
+Rails.application.require_environment!
+
 TweetStream.configure do |config|
   config.consumer_key = '2M1Yh4r2ljUYBdccUiVcQQ'
   config.consumer_secret = 'sk993MuWpeA2eA6VmgO8QBILqTr1o5KojU4KVDYgM'

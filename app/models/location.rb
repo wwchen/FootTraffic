@@ -20,28 +20,24 @@ class Location < ActiveRecord::Base
     self.weekly   ||= Array.new(7).fill(0)
     self.annually ||= Array.new(365).fill(0)
 
-    import_twitter
+    #import_twitter
   end
 
+  # Configure search options for Solr
   searchable do
-    text   :name, :boost => 5.0
+    text   :name,       :boost => 5.0
+    text   :address,    :boost => 5.0
     text   :place_type, :boost => 4.0
-    text   :address, :boost => 5.0
+    text   :types,      :boost => 4.0
+    text   :tag_list,   :boost => 3.0
     text   :website
     string :twitter_id
     string :phone
     float  :rating
 
-    text :types
-    #text   :types do
-    #  self.types.join(', ')
-    #end
-
-    text :tag_list
-    #text   :tag_list do
-    #  tag_list.join(', ')
-    #end
     
+    # TODO: only compatible with MySQL/Postgres,
+    # so we can't start debugging this locally.
     #location :coordinates
   end
 

@@ -2,27 +2,21 @@
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
-  timeout: 5000
+common: &common
+  adapter: postgresql
+  username: foottraffic
+  password: fetooVahf3
+  host: iamchen.com
+  encoding: UTF8
 
-#common: &common
-#  adapter: postgresql
-#  username: foottraffic
-#  password: fetooVahf3
-#  host: iamchen.com
-#  encoding: UTF8
-#
-#development:
-#  <<: *common
-#  database: ft_development
-#
-#test:
-#  <<: *common
-#  database: ft_test
-#
-#production:
-#  <<: *common
-#  database: ft_production
+development:
+  <<: *common
+  database: ft_development
+
+test:
+  <<: *common
+  database: ft_test
+
+production:
+  <<: *common
+  database: ft_production

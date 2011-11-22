@@ -7,5 +7,6 @@ log/*.log
 tmp/*
 *.sqlite3
 
-solr/data/
+solr/data
 *.lck
+*.pid

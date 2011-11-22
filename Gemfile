@@ -21,6 +21,8 @@ gem 'geocoder'
 
 gem 'nokogiri'
 
+gem 'awesome_print'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

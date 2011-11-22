@@ -15,7 +15,7 @@ class UpdateLocationJob < Struct.new(:place_id)
 
     if checkins
       checkins.each do |checkin|
-        time = checkin.created
+        time = checkin.post_date
         daily    << (0..23).to_a.map   { |i| if(time.hour == i) then 1 else 0 end }
         weekly   << (0..6).to_a.map    { |i| if(time.wday == i) then 1 else 0 end }
         annually << (0..364).to_a.map  { |i| if(time.yday == i) then 1 else 0 end }
@@ -59,6 +59,7 @@ class UpdateLocationJob < Struct.new(:place_id)
           :name => location.name
         }
 
+        # Kick off jobs to populate the Location's metadata
         Delayed::Job.enqueue(GoogleSearchJob.new(location.id))
         Delayed::Job.enqueue(YelpSearchJob.new(location.id))
       end

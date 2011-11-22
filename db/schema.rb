@@ -10,18 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111120034650) do
+ActiveRecord::Schema.define(:version => 20111122021642) do
 
   create_table "checkins", :force => true do |t|
-    t.string   "user_id"
-    t.string   "tweet_id"
-    t.string   "latitude"
-    t.string   "longitude"
-    t.string   "place_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "created"
-    t.boolean  "processed"
+    t.string "user_id"
+    t.string "place_id"
+    t.string "place_name"
+    t.date   "post_date"
+    t.string "city_state"
+    t.float  "latitude"
+    t.float  "longitude"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -75,6 +73,17 @@ ActiveRecord::Schema.define(:version => 20111120034650) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "oldcheckins", :force => true do |t|
+    t.string   "user_id"
+    t.string   "tweet_id"
+    t.string   "latitude"
+    t.string   "longitude"
+    t.string   "place_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "created"
   end
 
 end

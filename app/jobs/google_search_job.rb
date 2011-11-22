@@ -10,8 +10,8 @@ class GoogleSearchJob < Struct.new(:location_id)
     loc = Location.find_by_id(location_id)
 
     query = {
-      :latitude => loc.latitude,
-      :longitude => loc.longitude,
+      :latitude => loc.geom.y,
+      :longitude => loc.geom.x,
       :radius => 1000,
       :keyword => loc.name
     }
@@ -24,7 +24,7 @@ class GoogleSearchJob < Struct.new(:location_id)
         results.sort_by! do |r|
           lat  = r['geometry']['location']['lat']
           long = r['geometry']['location']['lng']
-          Geocoder::Calculations.distance_between([loc.latitude,loc.longitude],[lat,long])
+          Geocoder::Calculations.distance_between([loc.geom.y,loc.geom.x],[lat,long])
         end
 
         reference = result['results'].first['reference']

@@ -40,8 +40,9 @@ class UpdateLocationJob < Struct.new(:place_id)
         c = checkins.first
         location = Location.new do |l|
           l.twitter_id = place_id
-          l.latitude   = c.latitude.to_f
-          l.longitude  = c.longitude.to_f
+          #l.latitude   = c.latitude.to_f
+          #l.longitude  = c.longitude.to_f
+          l.geom       = Point.from_x_y(c.longitude.to_f, c.latitude.to_f)
           l.daily      = pats[:daily]
           l.weekly     = pats[:weekly]
           l.annually   = pats[:annually]
@@ -52,8 +53,8 @@ class UpdateLocationJob < Struct.new(:place_id)
 
         # Now kick off a few jobs to populate other fields
         query = {
-          :latitude => location.latitude,
-          :longitude => location.longitude,
+          :latitude => location.geom.y,
+          :longitude => location.geom.x,
           :radius => 1000,
           :name => location.name
         }

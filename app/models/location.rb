@@ -35,15 +35,12 @@ class Location < ActiveRecord::Base
     string :phone
     float  :rating
 
-    
-    # TODO: only compatible with MySQL/Postgres,
-    # so we can't start debugging this locally.
-    #location :coordinates
+    location :coordinates
   end
 
-  #def coordinates
-  #  Sunspot::Util::Coordinates.new(self.geom.y, self.geom.x)
-  #end
+  def coordinates
+    Sunspot::Util::Coordinates.new(self.geom.y, self.geom.x)
+  end
 
   def import_twitter
     # TODO: if we end up using this, make it handle the 

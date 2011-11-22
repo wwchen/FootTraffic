@@ -10,16 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111122021642) do
+ActiveRecord::Schema.define(:version => 20111122030843) do
 
   create_table "checkins", :force => true do |t|
-    t.string "user_id"
-    t.string "place_id"
-    t.string "place_name"
-    t.date   "post_date"
-    t.string "city_state"
-    t.float  "latitude"
-    t.float  "longitude"
+    t.string  "user_id"
+    t.string  "place_id"
+    t.string  "place_name"
+    t.date    "post_date"
+    t.string  "city_state"
+    t.float   "latitude"
+    t.float   "longitude"
+    t.boolean "processed"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -40,15 +41,13 @@ ActiveRecord::Schema.define(:version => 20111122021642) do
   create_table "locations", :force => true do |t|
     t.string   "twitter_id"
     t.string   "name"
-    t.text     "daily",        :limit => 255
-    t.text     "weekly",       :limit => 255
-    t.text     "annually",     :limit => 255
+    t.text     "daily"
+    t.text     "weekly"
+    t.text     "annually"
     t.string   "bounding_box"
     t.string   "place_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "latitude"
-    t.float    "longitude"
     t.string   "address"
     t.string   "phone"
     t.string   "icon"
@@ -56,6 +55,18 @@ ActiveRecord::Schema.define(:version => 20111122021642) do
     t.string   "types"
     t.string   "url"
     t.string   "website"
+    t.string   "geom",         :limit => nil
+  end
+
+  create_table "oldcheckins", :force => true do |t|
+    t.string   "user_id"
+    t.string   "tweet_id"
+    t.string   "latitude"
+    t.string   "longitude"
+    t.string   "place_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "created"
   end
 
   create_table "taggings", :force => true do |t|
@@ -73,17 +84,6 @@ ActiveRecord::Schema.define(:version => 20111122021642) do
 
   create_table "tags", :force => true do |t|
     t.string "name"
-  end
-
-  create_table "oldcheckins", :force => true do |t|
-    t.string   "user_id"
-    t.string   "tweet_id"
-    t.string   "latitude"
-    t.string   "longitude"
-    t.string   "place_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "created"
   end
 
 end

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111122020608) do
+ActiveRecord::Schema.define(:version => 20111122021642) do
+
+  create_table "checkins", :force => true do |t|
+    t.string "user_id"
+    t.string "place_id"
+    t.string "place_name"
+    t.date   "post_date"
+    t.string "city_state"
+    t.float  "latitude"
+    t.float  "longitude"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0

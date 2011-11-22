@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+require 'tweetstream'
+
+TweetStream.configure do |config|
+  config.consumer_key = '2M1Yh4r2ljUYBdccUiVcQQ'
+  config.consumer_secret = 'sk993MuWpeA2eA6VmgO8QBILqTr1o5KojU4KVDYgM'
+  config.oauth_token = '15421591-sq79AyHOzCSJ2wksDoU7Eh46OeQJ2AUvKBPTIGZiY'
+  config.oauth_token_secret = 'KnTQRy4IeaU1CxVYOPeyQJiWaN2YWHcbqdGiZWAw'
+  config.auth_method = :oauth
+  config.parser   = :json_gem
+end
+
+#TweetStream::Client.new.locations([-123,36,-121,38],
+TweetStream::Daemon.new.locations([-123,36,-121,38],
+  :delete    => Proc.new { |status_id, user_id|
+    # do something
+  },
+  :limit     => Proc.new { |skip_count|
+    # do something
+  },
+  :error     => Proc.new { |message|
+    # do something
+  },
+  :reconnect => Proc.new { |timeout, retries|
+    # do something
+  }
+) do |status|
+  # Parse out the (structured) tweet message.
+  # If the message is unstructured, discard it
+  # Grab only tweets from foursquare
+  if status[:source] && status[:source].include?('foursquare')
+    # Parse out the location name from the tweet
+    matching = /I'm at (.*?) (\(|w\/|http)/.match(status[:text])
+    matching ||= /\(@ (([^w]|w[^\/])*)(w\/.*)?\)/.match(status[:text])
+    matching ||= /the mayor of (.*) on @foursquare/.match(status[:text])
+
+    if matching
+      status[:name] = matching[1]
+    end
+
+    status[:url] = /(http:\/\/.*)$/.match(status[:text])
+    if status[:url]
+      status[:url] = status[:url][1]
+    end
+
+    if status[:name] && status[:place] && status[:geo]
+      Checkin.create(
+        :place_id   => status[:place][:id],
+        :place_name => status[:place][:name].strip,
+        :post_date  => DateTime.parse(status[:create_at]),
+        :url        => status[:url],
+        :user_id    => status[:user][:id_str],
+        :latitude   => status[:geo][:coordinates][0],
+        :longtitude => status[:geo][:coordinates][1]
+      )
+    end
+  end
+end

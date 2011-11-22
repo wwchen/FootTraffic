@@ -16,7 +16,7 @@ TweetStream.configure do |config|
 end
 
 #TweetStream::Client.new.locations([-123,36,-121,38],
-TweetStream::Client.new.locations([-123,36,-121,38],
+TweetStream::Daemon.new.locations([-123,36,-121,38],
   :delete    => Proc.new { |status_id, user_id|
     # FIXME do something
   },

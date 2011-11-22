@@ -10,17 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111122030843) do
+ActiveRecord::Schema.define(:version => 20111122054000) do
 
   create_table "checkins", :force => true do |t|
     t.string  "user_id"
     t.string  "place_id"
     t.string  "place_name"
     t.date    "post_date"
-    t.string  "city_state"
     t.float   "latitude"
     t.float   "longitude"
     t.boolean "processed"
+    t.string  "url"
+    t.string  "city"
+    t.string  "state"
   end
 
   create_table "delayed_jobs", :force => true do |t|

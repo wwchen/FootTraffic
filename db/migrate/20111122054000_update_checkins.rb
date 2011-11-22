@@ -13,3 +13,4 @@ class UpdateCheckins < ActiveRecord::Migration
     add_column :checkins, :city_state, :string
   end
 end
+

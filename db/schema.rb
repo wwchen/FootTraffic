@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111122163131) do
+ActiveRecord::Schema.define(:version => 20111122181300) do
 
   create_table "checkins", :force => true do |t|
     t.string   "user_id"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20111122163131) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "url"
-    t.boolean  "processed"
+    t.boolean  "processed",  :default => false
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -55,7 +55,8 @@ ActiveRecord::Schema.define(:version => 20111122163131) do
     t.string   "types"
     t.string   "url"
     t.string   "website"
-    t.string   "geom",         :limit => nil
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "oldcheckins", :force => true do |t|

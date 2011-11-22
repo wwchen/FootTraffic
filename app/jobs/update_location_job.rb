@@ -1,6 +1,6 @@
 #require 'google_places'
 require 'google_search_job'
-require 'yelp_job'
+require 'yelp_search_job'
 
 class UpdateLocationJob < Struct.new(:place_id)
   def perform
@@ -13,7 +13,7 @@ class UpdateLocationJob < Struct.new(:place_id)
     weekly   = []
     annually = []
 
-    if checkins
+    if checkins.count > 0
       checkins.each do |checkin|
         time = checkin.post_date
         daily    << (0..23).to_a.map   { |i| if(time.hour == i) then 1 else 0 end }
@@ -39,10 +39,11 @@ class UpdateLocationJob < Struct.new(:place_id)
         # Otherwise, we need to create it and kick off jobs to populate it
         c = checkins.first
         location = Location.new do |l|
+          l.name       = c.place_name
           l.twitter_id = place_id
-          #l.latitude   = c.latitude.to_f
-          #l.longitude  = c.longitude.to_f
-          l.geom       = Point.from_x_y(c.longitude.to_f, c.latitude.to_f)
+          l.latitude   = c.latitude.to_f
+          l.longitude  = c.longitude.to_f
+          #l.geom       = Point.from_x_y(c.longitude.to_f, c.latitude.to_f)
           l.daily      = pats[:daily]
           l.weekly     = pats[:weekly]
           l.annually   = pats[:annually]
@@ -53,17 +54,30 @@ class UpdateLocationJob < Struct.new(:place_id)
 
         # Now kick off a few jobs to populate other fields
         query = {
-          :latitude => location.geom.y,
-          :longitude => location.geom.x,
-          :radius => 1000,
-          :name => location.name
+          #:latitude => location.geom.y,
+          #:longitude => location.geom.x,
+          :latitude  => location.latitude,
+          :longitude => location.longitude,
+          :radius    => 1000,
+          :name      => location.name
         }
 
         # Kick off jobs to populate the Location's metadata
         Delayed::Job.enqueue(GoogleSearchJob.new(location.id))
         Delayed::Job.enqueue(YelpSearchJob.new(location.id))
+
+        return true
       end
     end
   end
+
+  #def error(job, exception)
+  #  logger.error(job)
+  #  logger.error(exception)
+  #end
+
+  #def failure
+  #  logger.fatal('[ UpdateLocationJob ] Something terrible has happened...')
+  #end
 end
 

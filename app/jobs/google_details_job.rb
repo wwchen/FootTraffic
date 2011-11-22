@@ -25,4 +25,13 @@ class GoogleDetailsJob < Struct.new(:location_id, :reference)
       Delayed::Job.enqueue(GoogleDetailsJob.new(location_id, reference), 0, 1.hour.from_now)
     end
   end
+
+  #def error(job, exception)
+  #  logger.error(job)
+  #  logger.error(exception)
+  #end
+
+  #def failure
+  #  logger.fatal('[ GoogleDetailsJob ] Something terrible has happened...')
+  #end
 end

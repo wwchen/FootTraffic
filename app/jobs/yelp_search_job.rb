@@ -21,4 +21,13 @@ class YelpSearchJob < Struct.new(:location_id)
       loc.save!
     end
   end
+
+  #def error(job, exception)
+  #  logger.error(job)
+  #  logger.error(exception)
+  #end
+
+  #def failure
+  #  logger.fatal('[ YelpSearchJob ] Something terrible has happened...')
+  #end
 end

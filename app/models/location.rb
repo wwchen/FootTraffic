@@ -20,7 +20,7 @@ class Location < ActiveRecord::Base
     self.weekly   ||= Array.new(7).fill(0)
     self.annually ||= Array.new(365).fill(0)
 
-    #import_twitter
+    #import_twitter # Uncomment in case of emergency
   end
 
   # Configure search options for Solr
@@ -39,7 +39,8 @@ class Location < ActiveRecord::Base
   end
 
   def coordinates
-    Sunspot::Util::Coordinates.new(self.geom.y, self.geom.x)
+    #Sunspot::Util::Coordinates.new(self.geom.y, self.geom.x)
+    Sunspot::Util::Coordinates.new(self.latitude, self.longitude)
   end
 
   def import_twitter

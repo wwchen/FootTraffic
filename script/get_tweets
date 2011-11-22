@@ -11,18 +11,18 @@ TweetStream.configure do |config|
 end
 
 #TweetStream::Client.new.locations([-123,36,-121,38],
-TweetStream::Daemon.new.locations([-123,36,-121,38],
+TweetStream::Client.new.locations([-123,36,-121,38],
   :delete    => Proc.new { |status_id, user_id|
-    # do something
+    # FIXME do something
   },
   :limit     => Proc.new { |skip_count|
-    # do something
+    # FIXME do something
   },
   :error     => Proc.new { |message|
-    # do something
+    # FIXME do something
   },
   :reconnect => Proc.new { |timeout, retries|
-    # do something
+    # FIXME do something
   }
 ) do |status|
   # Parse out the (structured) tweet message.
@@ -46,13 +46,14 @@ TweetStream::Daemon.new.locations([-123,36,-121,38],
     if status[:name] && status[:place] && status[:geo]
       Checkin.create(
         :place_id   => status[:place][:id],
-        :place_name => status[:place][:name].strip,
-        :post_date  => DateTime.parse(status[:create_at]),
+        :place_name => status[:name].strip,
+        :post_date  => DateTime.parse(status[:created_at]),
         :url        => status[:url],
         :user_id    => status[:user][:id_str],
         :latitude   => status[:geo][:coordinates][0],
-        :longtitude => status[:geo][:coordinates][1]
+        :longitude  => status[:geo][:coordinates][1]
       )
+      puts status[:name], "is added"
     end
   end
 end

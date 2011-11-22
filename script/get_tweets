@@ -16,7 +16,7 @@ TweetStream.configure do |config|
 end
 
 #TweetStream::Client.new.track('foursquare',
-TweetStream::Daemon.new.locations([-123,36,-121,38],
+TweetStream::Client.new.locations([-123,36,-121,38],
   :delete    => Proc.new { |status_id, user_id|
     # FIXME do something
   },
@@ -43,9 +43,9 @@ TweetStream::Daemon.new.locations([-123,36,-121,38],
       status[:name] = matching[1]
     end
 
-    status[:tcourl] = /(http:\/\/.*)$/.match(status[:text])
-    if status[:tcourl]
-      status[:tcourl] = status[:tcourl][1]
+    status[:url] = /(http:\/\/.*)$/.match(status[:text])
+    if status[:url]
+      status[:url] = status[:url][1]
     end
 
     #ap status
@@ -55,12 +55,12 @@ TweetStream::Daemon.new.locations([-123,36,-121,38],
         :place_id   => status[:place][:id],
         :place_name => status[:name].strip,
         :post_date  => DateTime.parse(status[:created_at]),
-        :url        => status[:tcourl],
+        :url        => status[:url],
         :user_id    => status[:user][:id_str],
         :latitude   => status[:geo][:coordinates][0],
         :longitude  => status[:geo][:coordinates][1]
       )
-      puts status[:name]
+      puts status[:name].strip
     end
   end
 end

@@ -6,7 +6,7 @@ class UpdateLocationJob < Struct.new(:place_id)
   def perform
     puts "[ UpdateLocationJob ] (#{place_id}) Starting..."
 
-    checkins = Checkin.where(:place_id => place_id, :processed => nil)
+    checkins = Checkin.where(:place_id => place_id, :processed => false)
     puts "Processing #{checkins.count} checkins..."
 
     daily    = []

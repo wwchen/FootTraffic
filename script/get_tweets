@@ -18,18 +18,20 @@ end
 #TweetStream::Client.new.track('foursquare',
 TweetStream::Client.new.locations([-123,36,-121,38],
   :delete    => Proc.new { |status_id, user_id|
-    # FIXME do something
+    Rails.logger.info "[TweetStream] Requesting to delete: #{status_id}"
   },
   :limit     => Proc.new { |skip_count|
-    # FIXME do something
+    Rails.logger.info "[TweetStream] Limiting: #{skip_count}"
   },
   :error     => Proc.new { |message|
-    # FIXME do something
+    Rails.logger.info "[TweetStream][#{Time.now}] TweetStream error: #{message}"
   },
   :reconnect => Proc.new { |timeout, retries|
-    # FIXME do something
+    Rails.logger.info "[TweetStream][#{Time.now}] Reconnect: #{timeout} secs on #{retries} retry"
   }
 ) do |status|
+  Rails.logger.info "[TweetStream] Status: #{status.id}"
+
   # Parse out the (structured) tweet message.
   # If the message is unstructured, discard it
   # Grab only tweets from foursquare
@@ -37,13 +39,13 @@ TweetStream::Client.new.locations([-123,36,-121,38],
     # Parse out the location name from the tweet
     matching = /I'm at (.*?) (\(|w\/|http)/.match(status[:text])
     matching ||= /\(@ (([^w]|w[^\/])*)(w\/.*)?\)/.match(status[:text])
-    matching ||= /the mayor of (.*) on @foursquare/.match(status[:text])
+#    matching ||= /the mayor of (.*) on @foursquare/.match(status[:text])
 
     if matching
       status[:name] = matching[1]
     end
 
-    status[:url] = /(http:\/\/.*)$/.match(status[:text])
+    status[:url] = /(http:\/\/[^ ]*)$/.match(status[:text])
     if status[:url]
       status[:url] = status[:url][1]
     end
@@ -60,6 +62,7 @@ TweetStream::Client.new.locations([-123,36,-121,38],
         :latitude   => status[:geo][:coordinates][0],
         :longitude  => status[:geo][:coordinates][1]
       )
+      #Rails.logger.info "[TweetStream] Adding checkin: #{status[:name].strip}"
       puts status[:name].strip
     end
   end

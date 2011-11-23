@@ -12,4 +12,13 @@ class ProcessCheckinsJob < Struct.new(:buffer_size)
       Delayed::Job.enqueue(UpdateLocationJob.new(location_id))
     end
   end
+
+  #def error(job, exception)
+  #  logger.error(job)
+  #  logger.error(exception)
+  #end
+
+  #def failure
+  #  logger.fatal('[ ProcessCheckinsJob ] Something terrible has happened...')
+  #end
 end

@@ -10,10 +10,12 @@ class GoogleSearchJob < Struct.new(:location_id)
     loc = Location.find_by_id(location_id)
 
     query = {
-      :latitude => loc.geom.y,
-      :longitude => loc.geom.x,
-      :radius => 1000,
-      :keyword => loc.name
+      #:latitude => loc.geom.y,
+      #:longitude => loc.geom.x,
+      :latitude  => loc.latitude,
+      :longitude => loc.longitude,
+      :radius    => 1000,
+      :keyword   => loc.name
     }
 
     begin
@@ -24,7 +26,8 @@ class GoogleSearchJob < Struct.new(:location_id)
         results.sort_by! do |r|
           lat  = r['geometry']['location']['lat']
           long = r['geometry']['location']['lng']
-          Geocoder::Calculations.distance_between([loc.geom.y,loc.geom.x],[lat,long])
+          #Geocoder::Calculations.distance_between([loc.geom.y,loc.geom.x],[lat,long])
+          Geocoder::Calculations.distance_between([loc.latitude,loc.longitude],[lat,long])
         end
 
         reference = result['results'].first['reference']
@@ -36,4 +39,13 @@ class GoogleSearchJob < Struct.new(:location_id)
       Delayed::Job.enqueue(GoogleSearchJob.new(location_id), 0, 1.hour.from_now)
     end
   end
+
+  #def error(job, exception)
+  #  logger.error(job)
+  #  logger.error(exception)
+  #end
+
+  #def failure
+  #  logger.fatal('[ GoogleSearchJob ] Something terrible has happened...')
+  #end
 end

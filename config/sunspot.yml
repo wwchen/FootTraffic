@@ -1,4 +1,4 @@
 development:
   solr:
     hostname: giantafro.com
-    port: 8983
+    port: 8982

@@ -16,7 +16,8 @@ TweetStream.configure do |config|
 end
 
 #TweetStream::Client.new.track('foursquare',
-TweetStream::Client.new.locations([-123,36,-121,38],
+# San Franciso, College Station, Houston
+TweetStream::Client.new.locations([-123,36,-121,38,-96.51,30.42,-96.21,30.83,-95.86,29.43,-95.11,30.07],
   :delete    => Proc.new { |status_id, user_id|
     Rails.logger.info "[TweetStream] Requesting to delete: #{status_id}"
   },

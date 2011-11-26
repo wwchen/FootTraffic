@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   def index
     @search = Location.search do
-      fulltext params[:search]
+      fulltext params[:q]
     end
     @locations = @search.results
     respond_to do |format|

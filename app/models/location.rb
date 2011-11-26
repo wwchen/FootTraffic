@@ -43,6 +43,20 @@ class Location < ActiveRecord::Base
     Sunspot::Util::Coordinates.new(self.latitude, self.longitude)
   end
 
+  # Search for a location using Solr
+  # parameters:
+  # :keywords  => A list of keywords to search for
+  # :lat, :lng => Where to search around
+  # :precision => How far away should we look? (defaults to 7)
+  def self.location_search(params)
+    params[:precision] ||= 6
+
+    Sunspot.search Location do
+      keywords params[:keywords]
+      with(:coordinates).near(params[:lat],params[:lng], :precision => params[:precision])
+    end
+  end
+
   def import_twitter
     # TODO: if we end up using this, make it handle the 
     # RateLimit exception thrown by TwitterReqeust

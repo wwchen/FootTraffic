@@ -5,7 +5,8 @@ require 'net/http'
 require 'cgi'      # Never thought I'd do this in a Rails app...
 
 class GooglePlaces
-  @api_key = 'AIzaSyD9PMj9-CRGuDygJa1ZJU5D9w3mp0Xa__E'
+  #@api_key = 'AIzaSyD9PMj9-CRGuDygJa1ZJU5D9w3mp0Xa__E'
+  @api_key = 'AIzaSyDxDFkq7dxC-8F5xpn1ect8xTLzkEFfVKA'
 
   # Search the Google Places API
   # A detailed breakdown of the parameters for this request is here:

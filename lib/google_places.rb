@@ -5,8 +5,8 @@ require 'net/http'
 require 'cgi'      # Never thought I'd do this in a Rails app...
 
 class GooglePlaces
-  #@api_key = 'AIzaSyD9PMj9-CRGuDygJa1ZJU5D9w3mp0Xa__E'
-  @api_key = 'AIzaSyDxDFkq7dxC-8F5xpn1ect8xTLzkEFfVKA'
+  # Why yes, I do enjoy hardcoding things
+  @api_keys = ['AIzaSyD9PMj9-CRGuDygJa1ZJU5D9w3mp0Xa__E', 'AIzaSyDxDFkq7dxC-8F5xpn1ect8xTLzkEFfVKA']
 
   # Search the Google Places API
   # A detailed breakdown of the parameters for this request is here:
@@ -24,6 +24,9 @@ class GooglePlaces
     if(!query[:latitude] || !query[:longitude] || !query[:radius])
       return nil
     end
+
+    # Pick a random API key to use. Ssssshhhhhhh.
+    @api_key = @api_keys.sample
 
     # Any rules for escaping incoming strings can go here
     escape = lambda do |s|

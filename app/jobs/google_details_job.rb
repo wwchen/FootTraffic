@@ -10,6 +10,7 @@ class GoogleDetailsJob < Struct.new(:location_id, :reference)
 
       if details
         result = details['result']
+        loc.name    = result['name']
         loc.address = result['formatted_address']
         loc.phone   = result['formatted_phone_number']
         loc.icon    = result['icon']

@@ -19,6 +19,23 @@ body
   text-decoration: none;
 }
 
+#results
+{
+  position: absolute;
+  left: 10px;
+  width: 360px;
+  height: 80%;
+  padding-left: 20px;
+  border: solid #000 1px;
+  overflow: auto;
+}
+
+#info
+{
+  margin-left: 400px;
+  margin-right: 10px;
+}
+
 .result
 {
   padding: 5px 0 10px 5px;

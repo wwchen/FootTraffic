@@ -66,6 +66,7 @@ function displayDetails(loc)
 
   $('#info').append('<h1>'+loc.name+'</h1>');
   $('#info').append('<p>'+loc.address+'</p>');
+  $('#info').append('<h4>'+loc.id+'</h4>');
 
   var daily_data = [];
   for(i=0; i<24; i++) { daily_data[i] = [i,loc.daily[i]] };

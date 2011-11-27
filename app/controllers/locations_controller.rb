@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
       query[:lng]       = -122.429752
       query[:precision] = 3
 
-      @locations = Location.location_search(query).results
+      @locations = Location.location_search(query)
     end
 
     respond_to do |format|

@@ -51,10 +51,32 @@ class Location < ActiveRecord::Base
   def self.location_search(params)
     params[:precision] ||= 6
 
-    Sunspot.search Location do
+    s = Sunspot.search Location do
       keywords params[:keywords]
-      with(:coordinates).near(params[:lat],params[:lng], :precision => params[:precision])
+      with(:coordinates).near(params[:lat], params[:lng],
+                              :precision => params[:precision])
+
+      order_by :score, :desc
     end
+
+    # We need to take into account the location's rating when sorting the results.
+    # My rudimentary solution is simply multiplying the Solr score by the rating.
+    results = Array.new
+    s.hits.each do |hit|
+      if(hit.result.rating)
+        score = hit.score * hit.result.rating
+      else
+        # TODO: should we give a weight to unrated locations??
+        score = hit.score
+      end
+
+      results << [score, hit.result]
+    end
+
+    results.sort! { |x,y| y[0] <=> x[0] }
+    results.map! { |i| i[1] }
+
+    return results
   end
 
   def import_twitter

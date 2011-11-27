@@ -13,8 +13,8 @@ development:
 
 test:
   <<: *common
-  database: ft_test
+  database: ft_development
 
 production:
   <<: *common
-  database: ft_production
+  database: ft_development

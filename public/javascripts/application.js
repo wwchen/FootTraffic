@@ -1,10 +1,27 @@
 var search_url = '/locations?q=';
+var lat;
+var lng;
+
+function getLocation()
+{
+  if (navigator.geolocation)
+  {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+    });
+  }
+}
+
+
 
 function search()
 {
   var data = $('#q').val();
 
   var url = search_url + encodeURI(data);
+  url = url + '&lat=' + lat;
+  url = url + '&lng=' + lng;
   
   // Clear the results div
   $('#results').empty();
@@ -28,6 +45,7 @@ function search()
 }
 
 $(document).ready(function () {
+  getLocation();
   $('#submit').click(function () { search(); });
 });
 

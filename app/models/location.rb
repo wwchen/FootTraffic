@@ -47,7 +47,7 @@ class Location < ActiveRecord::Base
   # parameters:
   # :keywords  => A list of keywords to search for
   # :lat, :lng => Where to search around
-  # :precision => How far away should we look? (defaults to 7)
+  # :precision => How far away should we look? (defaults to 6)
   def self.location_search(params)
     params[:precision] ||= 6
 

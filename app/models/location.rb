@@ -53,10 +53,18 @@ class Location < ActiveRecord::Base
 
     s = Sunspot.search Location do
       keywords params[:keywords]
-      with(:coordinates).near(params[:lat], params[:lng],
-                              :precision => params[:precision])
+
+      if(params[:lat] && params[:lng])
+        with(:coordinates).near(params[:lat], params[:lng],
+                                :precision => params[:precision])
+      end
 
       order_by :score, :desc
+    end
+
+    # If we get no results nearby, search without factoring in location
+    if(params[:lat] && params[:lng] && s.results.empty?)
+      return self.location_search(:keywords => params[:keywords])
     end
 
     # We need to take into account the location's rating when sorting the results.

@@ -3,6 +3,11 @@ body
   font-family: "Verdana", sans-serif;
 }
 
+#logo
+{
+  font-family: "Rammetto One", sans-serif;
+}
+
 #q
 {
   width: 300px;

@@ -13,8 +13,6 @@ function getLocation()
   }
 }
 
-
-
 function search()
 {
   var data = $('#q').val();

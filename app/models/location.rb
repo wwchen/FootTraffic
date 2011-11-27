@@ -1,5 +1,6 @@
 require 'net/http'
 require 'twitter_request'
+require 'geocoder'
 
 class Location < ActiveRecord::Base
   acts_as_taggable
@@ -25,11 +26,11 @@ class Location < ActiveRecord::Base
 
   # Configure search options for Solr
   searchable do
-    text   :name,       :boost => 5.0
+    text   :name,       :boost => 9.0
     text   :address,    :boost => 5.0
     text   :place_type, :boost => 4.0
-    text   :types,      :boost => 4.0
-    text   :tag_list,   :boost => 3.0
+    text   :types,      :boost => 3.0
+    text   :tag_list,   :boost => 1.0
     text   :website
     string :twitter_id
     string :phone
@@ -83,6 +84,10 @@ class Location < ActiveRecord::Base
 
     results.sort! { |x,y| y[0] <=> x[0] }
     results.map! { |i| i[1] }
+
+    #results.each do |r|
+    #  puts "(#{Geocoder::Calculations.distance_between([params[:lat],params[:lng]],[r.latitude,r.longitude])}) #{r.name}"
+    #end
 
     return results
   end

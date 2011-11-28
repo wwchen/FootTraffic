@@ -2,9 +2,11 @@
 require 'google_search_job'
 require 'yelp_search_job'
 
-class UpdateLocationJob < Struct.new(:place_id)
+class UpdateLocationJob < Struct.new(:place_id, :key_num)
   def perform
     puts "[ UpdateLocationJob ] (#{place_id}) Starting..."
+
+    key_num ||= 0
 
     checkins = Checkin.where(:place_id => place_id, :processed => false)
     puts "Processing #{checkins.count} checkins..."
@@ -63,7 +65,7 @@ class UpdateLocationJob < Struct.new(:place_id)
         }
 
         # Kick off jobs to populate the Location's metadata
-        Delayed::Job.enqueue(GoogleSearchJob.new(location.id))
+        Delayed::Job.enqueue(GoogleSearchJob.new(location.id, key_num))
         Delayed::Job.enqueue(YelpSearchJob.new(location.id))
 
         return true

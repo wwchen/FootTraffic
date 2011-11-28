@@ -19,14 +19,16 @@ class GooglePlaces
   # :keyword    => Any arbitrary search term
   # :name       => Search by location name
   # :types      => An array of location types (e.g. airport)
-  def self.search(query)
+  def self.search(query, key_num)
     # We have to have the following fields:
     if(!query[:latitude] || !query[:longitude] || !query[:radius])
       return nil
     end
 
     # Pick a random API key to use. Ssssshhhhhhh.
-    @api_key = @api_keys.sample
+    #@api_key = @api_keys.sample
+    key_num ||= 0
+    @api_key = @api_keys[key_num]
 
     # Any rules for escaping incoming strings can go here
     escape = lambda do |s|
@@ -63,8 +65,12 @@ class GooglePlaces
   # Google has kind of an annoying API...
   # In order to get the details on a place, you have to use a "reference"
   # which can only be obtained via a search and expires. Grrr.
-  def self.place_details(reference)
+  def self.place_details(reference, key_num)
     if(!reference) then return nil end
+
+    key_num ||= 0
+    @api_key = @api_keys[key_num]
+
     url = 'https://maps.googleapis.com/maps/api/place/details/json?'
     url += "key=#{@api_key}&"
     url += "reference=#{reference}&"

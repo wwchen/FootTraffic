@@ -1,12 +1,13 @@
 require 'google_places'
 
-class GoogleDetailsJob < Struct.new(:location_id, :reference)
+class GoogleDetailsJob < Struct.new(:location_id, :reference, :key_num)
   def perform
     puts "[ GoogleDetailsJob ] (#{location_id}) Starting..."
     loc = Location.find_by_id(location_id)
 
     begin
-      details = GooglePlaces.place_details(reference)
+      key_num ||= 0
+      details = GooglePlaces.place_details(reference, key_num)
 
       if details
         result = details['result']
@@ -23,7 +24,7 @@ class GoogleDetailsJob < Struct.new(:location_id, :reference)
 
     rescue GooglePlaces::RateLimitException
       # Requeue the job se we can try it later
-      Delayed::Job.enqueue(GoogleDetailsJob.new(location_id, reference), 0, 1.hour.from_now)
+      Delayed::Job.enqueue(GoogleDetailsJob.new(location_id, reference, key_num), 0, 1.hour.from_now)
     end
   end
 

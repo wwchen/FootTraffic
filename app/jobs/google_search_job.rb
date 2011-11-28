@@ -4,7 +4,7 @@ require 'geocoder'
 # For a given location (specified by :location_id),
 # grab the "reference" so we can get its details.
 
-class GoogleSearchJob < Struct.new(:location_id)
+class GoogleSearchJob < Struct.new(:location_id, :key_num)
   def perform
     puts "[ GoogleSearchJob ] (#{location_id}) Starting..."
     loc = Location.find_by_id(location_id)
@@ -19,7 +19,8 @@ class GoogleSearchJob < Struct.new(:location_id)
     }
 
     begin
-      result = GooglePlaces.search(query)
+      key_num ||= 0
+      result = GooglePlaces.search(query, key_num)
 
       if(result)
         results = result['results']
@@ -31,12 +32,12 @@ class GoogleSearchJob < Struct.new(:location_id)
         end
 
         reference = result['results'].first['reference']
-        Delayed::Job.enqueue(GoogleDetailsJob.new(location_id, reference))
+        Delayed::Job.enqueue(GoogleDetailsJob.new(location_id, reference, key_num))
       end
 
     rescue GooglePlaces::RateLimitException
       # Requeue the job so we can try it later
-      Delayed::Job.enqueue(GoogleSearchJob.new(location_id), 0, 1.hour.from_now)
+      Delayed::Job.enqueue(GoogleSearchJob.new(location_id, key_num), 0, 1.hour.from_now)
     end
   end
 

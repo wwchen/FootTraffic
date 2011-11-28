@@ -75,7 +75,7 @@ class YelpRequest
     req = Net::HTTP::Get.new(uri.request_uri)
     req['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.41 Safari/535.7'
 
-    resp = Net::HTTP.start(uri.hostname, uri.port) do |http|
+    resp = Net::HTTP.start(uri.host, uri.port) do |http|
       http.request(req)
     end
     

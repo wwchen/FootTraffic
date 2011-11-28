@@ -1,6 +1,6 @@
 require 'update_location_job'
 
-class ProcessCheckinsJob < Struct.new(:buffer_size)
+class ProcessCheckinsJob < Struct.new(:buffer_size, :key_num)
   def perform
     puts "[ ProcessCheckinsJob ] (#{buffer_size}) Starting..."
 
@@ -9,7 +9,8 @@ class ProcessCheckinsJob < Struct.new(:buffer_size)
 
     batch.each do |location_id|
       puts "Creating new job for #{location_id}"
-      Delayed::Job.enqueue(UpdateLocationJob.new(location_id))
+      key_num ||= 0
+      Delayed::Job.enqueue(UpdateLocationJob.new(location_id, key_num))
     end
   end
 

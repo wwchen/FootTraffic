@@ -4,9 +4,9 @@ require 'yelp_search_job'
 
 class UpdateLocationJob < Struct.new(:place_id, :key_num)
   def perform
-    puts "[ UpdateLocationJob ] (#{place_id}) Starting..."
+    @key_num ||= 0
 
-    key_num ||= 0
+    puts "[ UpdateLocationJob ] (#{place_id},#{key_num}) Starting..."
 
     checkins = Checkin.where(:place_id => place_id, :processed => false)
     puts "Processing #{checkins.count} checkins..."

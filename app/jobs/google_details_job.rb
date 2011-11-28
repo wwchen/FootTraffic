@@ -2,11 +2,11 @@ require 'google_places'
 
 class GoogleDetailsJob < Struct.new(:location_id, :reference, :key_num)
   def perform
-    puts "[ GoogleDetailsJob ] (#{location_id}) Starting..."
+    puts "[ GoogleDetailsJob ] (#{location_id},#{key_num}) Starting..."
     loc = Location.find_by_id(location_id)
 
     begin
-      key_num ||= 0
+      @key_num ||= 0
       details = GooglePlaces.place_details(reference, key_num)
 
       if details

@@ -6,7 +6,7 @@ require 'geocoder'
 
 class GoogleSearchJob < Struct.new(:location_id, :key_num)
   def perform
-    puts "[ GoogleSearchJob ] (#{location_id}) Starting..."
+    puts "[ GoogleSearchJob ] (#{location_id},#{key_num}) Starting..."
     loc = Location.find_by_id(location_id)
 
     query = {
@@ -19,7 +19,7 @@ class GoogleSearchJob < Struct.new(:location_id, :key_num)
     }
 
     begin
-      key_num ||= 0
+      @key_num ||= 0
       result = GooglePlaces.search(query, key_num)
 
       if(result)

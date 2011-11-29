@@ -43,6 +43,10 @@ function search()
   url = url + '&lat=' + lat;
   url = url + '&lng=' + lng;
   
+  if($('input:radio[name=busy]:checked').val() == 'busy') {
+    url = url + '&busy=true'
+  }
+  
   // Clear the results div
   $('#results').empty();
 
@@ -83,8 +87,8 @@ function displayDetails(loc)
   daily_data = daily_data.map(function (i) {
     return [Mod((i[0]-offset),24), i[1]];
   });
-  console.log(daily_data.map(function(i){return i[0];}));
-  console.log(daily_data.map(function(i){return i[1];}));
+  //console.log(daily_data.map(function(i){return i[0];}));
+  //console.log(daily_data.map(function(i){return i[1];}));
 
   $('#info').append('<h3>Daily Traffic</h3>');
   daily = $( document.createElement('div') );

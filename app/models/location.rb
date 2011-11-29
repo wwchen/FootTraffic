@@ -26,7 +26,7 @@ class Location < ActiveRecord::Base
 
   # Configure search options for Solr
   searchable do
-    text   :name,       :boost => 9.0
+    text   :name,       :boost => 5.0
     text   :address,    :boost => 5.0
     text   :place_type, :boost => 4.0
     text   :types,      :boost => 3.0
@@ -49,6 +49,8 @@ class Location < ActiveRecord::Base
   # :keywords  => A list of keywords to search for
   # :lat, :lng => Where to search around
   # :precision => How far away should we look? (defaults to 6)
+  # :time      => UTC time (optional)
+  # :busy      => If true, we're looking for places with lots of traffic
   def self.location_search(params)
     params[:precision] ||= 6
 
@@ -77,6 +79,26 @@ class Location < ActiveRecord::Base
       else
         # TODO: should we give a weight to unrated locations??
         score = hit.score
+      end
+
+      # Here's where the traffic patterns come into play...
+      # If we're searching for busy places, multiply the score by the traffic pattern at that time
+      # If we're searching for less crowded places, multuply the score by 1 - the traffic pattern
+      if(params[:time])
+        # Get the time the user gave us and put it into terms we can use (UTC)
+        dt = Time.parse(params[:time])
+        hour = hit.result.daily[dt.utc.hour]
+        day  = hit.result.weekly[dt.utc.wday]
+        # We're going to leave out annual resutls for now
+        #year = hit.result.annually[dt.utc.yday]
+
+        # TODO: What weight should hourly patterns get versus weekly patterns?
+        if(params[:busy])
+          score = score * hour
+        else
+          # TODO: What if the pattern is 1? Should we discard it or pad it slightly?
+          score = score * (1 - hour)
+        end
       end
 
       results << [score, hit.result]

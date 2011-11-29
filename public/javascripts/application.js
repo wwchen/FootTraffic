@@ -17,8 +17,8 @@ xaxis: {
 
 var weekly_options = {
 xaxis: {
-  ticks: [[0, "Mon"], [1, "Tues"], [2, "Wed"], [3, "Thurs"],
-          [4, "Fri"], [5, "Sat"], [6, "Sun"]],
+  ticks: [[1, "Mon"], [2, "Tues"], [3, "Wed"], [4, "Thurs"],
+          [5, "Fri"], [6, "Sat"], [0, "Sun"]],
   tickLength: 0
 },
   yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }

@@ -57,7 +57,11 @@ function search()
 
       result.appendTo('#results');
     });
+
+    // kick off Google Maps to populate markers
+    updateMarkers(data);
   });
+
 }
 
 function displayDetails(loc)

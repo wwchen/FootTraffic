@@ -25,6 +25,8 @@
         google.maps.event.addListener(pushPin, 'click', function() {
           infoWindow.setOptions(options);
           infoWindow.open(map, pushPin);
+					$(options.locid).idTabs();
+					console.log('shenanigans');
         });
         //markerArray.push(pushPin);
         return pushPin;
@@ -71,9 +73,8 @@
             position: new google.maps.LatLng(loc.latitude, loc.longitude),
             title: loc.name,
             content: createContent(loc),
+						locid: '#iw' + loc.id + ' ul'
           });
-          var locid = '#iw' + loc.id + ' ul';
-          $(locid).idTabs();
         }
 
         google.maps.event.addListener(map, 'click', function() {

@@ -27,6 +27,17 @@
         return pushPin;
       }
 
+      function setMyMarker(lat,lng) {
+        myLocation = new google.maps.LatLng(lat,lng);
+        myMarker = new google.maps.Marker({
+          map: map,
+          icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/icons/blue-dot.png'),
+          title: 'Your current location',
+        });
+        myMarker.setPosition(myLocation);
+        map.setCenter(myLocation);
+      }
+
       function initialize() {
         map = new google.maps.Map(document.getElementById("map_canvas"), {
           streetViewControl: false,

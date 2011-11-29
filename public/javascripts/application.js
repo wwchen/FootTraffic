@@ -53,7 +53,7 @@ function search()
       address.text(value.location.address);
       address.appendTo(result);
 
-      result.click(function () { displayDetails(value.location) });
+      //result.click(function () { displayDetails(value.location) });
 
       result.appendTo('#results');
     });

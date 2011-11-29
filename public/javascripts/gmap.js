@@ -1,12 +1,16 @@
+/*
+ * This script is loaded last
+ */
+
 var map = null;
-var latlng = new google.maps.LatLng(37.762573,-122.432327);
 var infoWindow = new google.maps.InfoWindow();
 var markerArray = [];
-
-if(lat && lng) {
-  latlng = new google.maps.LatLng(lat,lng);
+// defaulting center of the map to SF
+if(!lat && !lng) {
+  lat = 37.762573;
+  lng = -122.432327;
 }
-
+var latlng = new google.maps.LatLng(lat,lng);
 
 function makeMarker(options) {
   var pushPin = new google.maps.Marker({map:map});
@@ -52,6 +56,7 @@ function updateMarkers(locations) {
     markerArray[i].setMap(null);
   }
 
+  // populating markers onto the map
   for(var i in locations) {
     loc = locations[i].location;
     makeMarker({
@@ -63,6 +68,13 @@ function updateMarkers(locations) {
     });
   }
 
+  // when the user hovers over the results on the left side, the infowindow pops up
+  $("#results div").each(function(index) {
+    $(this).hover(function() {
+      console.log(index);
+      infoWindow.open(map,markerArray[index]);
+    });
+  });
 }
 
 function initialize() {

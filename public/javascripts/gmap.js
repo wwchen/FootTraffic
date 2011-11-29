@@ -76,9 +76,10 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControlOptions: { style: google.maps.ZoomControlStyle.LARGE }
   });
+
+  google.maps.event.addListener(map, 'click', function() {
+    infoWindow.close();
+  });
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-google.maps.event.addListener(map, 'click', function() {
-  infoWindow.close();
-});

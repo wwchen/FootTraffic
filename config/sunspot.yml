@@ -2,3 +2,8 @@ development:
   solr:
     hostname: giantafro.com
     port: 8982
+
+production:
+  solr:
+    hostname: giantafro.com
+    port: 8982

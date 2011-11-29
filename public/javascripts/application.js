@@ -2,9 +2,14 @@ var search_url = '/locations?q=';
 var lat;
 var lng;
 
+// WHY DOESN'T MODULUS WORK LIKE IT SHOULD, JAVASCRIPT????
+// I WASTED WAY TOO MUCH TIME ON THIS
+function Mod(X, Y) { return X - Math.floor(X/Y)*Y }
+
 var daily_options = {
 xaxis: {
-  ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+          13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
   tickLength: 0
 },
   yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
@@ -12,7 +17,8 @@ xaxis: {
 
 var weekly_options = {
 xaxis: {
-  ticks: [[0, "Mon"], [1, "Tues"], [2, "Wed"], [3, "Thurs"], [4, "Fri"], [5, "Sat"], [6, "Sun"]],
+  ticks: [[0, "Mon"], [1, "Tues"], [2, "Wed"], [3, "Thurs"],
+          [4, "Fri"], [5, "Sat"], [6, "Sun"]],
   tickLength: 0
 },
   yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
@@ -71,6 +77,15 @@ function displayDetails(loc)
   var daily_data = [];
   for(i=0; i<24; i++) { daily_data[i] = [i,loc.daily[i]] };
 
+  // Convert shenanigans to local timezone shenanigans
+  date = new Date();
+  offset = date.getTimezoneOffset()/60;
+  daily_data = daily_data.map(function (i) {
+    return [Mod((i[0]-offset),24), i[1]];
+  });
+  console.log(daily_data.map(function(i){return i[0];}));
+  console.log(daily_data.map(function(i){return i[1];}));
+
   $('#info').append('<h3>Daily Traffic</h3>');
   daily = $( document.createElement('div') );
   daily.attr('id', 'daily');
@@ -99,5 +114,8 @@ function displayDetails(loc)
 $(document).ready(function () {
   getLocation();
   $('#submit').click(function () { search(); });
+  $('#q').bind("keydown", function(e) {
+    if (e.keyCode == 13) { search(); }
+  });
 });
 

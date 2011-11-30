@@ -60,7 +60,7 @@ a#submit {
 /* Search results */
 section#searchResults {
   overflow: hidden;
-  height: 100%;
+  height: 700px;
 }
 
 /* Left pane */
@@ -72,18 +72,13 @@ div#results {
   overflow: auto;
 }
 
-/*
-#info {
-  margin-left: 410px;
-  margin-right: 10px;
-}
-*/
 
 div.result {
+  background: #E8E8E8;
   padding: 0.2em;
 }
 div.result:nth-child(odd) {
-  background: 
+  background: #D3D3D3;
 }
 div.result h3 {
   font-weight: 700;
@@ -91,23 +86,23 @@ div.result h3 {
   font-size: 0.8em;
 }
 div.result span {
-
+  font-size: 0.9em;
 }
 
-.result:hover {
-  background: #CDC9C9;
+div.result:hover {
+  background: #FF6103;
 }
 
 /* Right pane */
 #map_container {
   float: right;
-  margin-left: -395px;
-  height: 500px;
+  margin-left: -370px;
+  height: 100%;
   width: 100%;
 }
 
 #map_canvas {
-  margin-left: 395px;
+  margin-left: 370px;
   height: 100%;
   width: 100%;
 }
@@ -120,6 +115,10 @@ div.result span {
 #weekly {
   width: 500px;
   height: 150px;
+}
+#info {
+  margin-left: 410px;
+  margin-right: 10px;
 }
 */
 

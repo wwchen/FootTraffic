@@ -1,17 +1,22 @@
 /*
+ * gmap.js - functions for Google Maps API
  * This script is loaded last
  */
 
 var map = null;
 var infoWindow = new google.maps.InfoWindow();
 var markerArray = [];
-// defaulting center of the map to SF
+// defaulting center of the map to SF if permission to current location isn't given
 if(!lat && !lng) {
   lat = 37.762573;
   lng = -122.432327;
 }
 var latlng = new google.maps.LatLng(lat,lng);
 
+/*
+ * Creates a Google Maps marker
+ * http://code.google.com/apis/maps/documentation/javascript/reference.html#Marker
+ */
 function makeMarker(options) {
   var pushPin = new google.maps.Marker({map:map});
   pushPin.setOptions(options);
@@ -24,6 +29,9 @@ function makeMarker(options) {
   return pushPin;
 }
 
+/*
+ * Makes a blue marker for the user's current location
+ */
 function setMyMarker(lat,lng) {
   myLocation = new google.maps.LatLng(lat,lng);
   myMarker = new google.maps.Marker({
@@ -35,6 +43,9 @@ function setMyMarker(lat,lng) {
   map.setCenter(myLocation);
 }
 
+/*
+ * The HTML for each marker's infowindow
+ */
 function createContent(loc) {
   var traffic_block = 'traffic pattern goes here';
   var info_block = '<h3>' + loc.name + '</h3><br>' + loc.address;
@@ -50,6 +61,9 @@ function createContent(loc) {
   return content
 }
 
+/*
+ * Clears out existing markers and make new ones, with the locations json
+ */
 function updateMarkers(locations) {
   // deleting all the existing markers
   for(var i=0; i<markerArray.length; i++) {
@@ -70,13 +84,16 @@ function updateMarkers(locations) {
 
   // when the user hovers over the results on the left side, the infowindow pops up
   $("#results div").each(function(index) {
-    $(this).hover(function() {
+    $(this).click(function() {
       console.log(index);
       infoWindow.open(map,markerArray[index]);
     });
   });
 }
 
+/*
+ * Initialization function that gets called at load time
+ */
 function initialize() {
   map = new google.maps.Map(document.getElementById("map_canvas"), {
     streetViewControl: false,

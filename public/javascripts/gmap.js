@@ -57,6 +57,7 @@ function createContent(loc) {
   content += '<div id="tab1" style="display: block; ">'+ traffic_block + '</div>'
   content += '<div id="tab2" style="display: none; ">' + info_block + '</div>'
   content += '<div id="tab3" style="display: none; ">' + other_block + '</div></div>'
+  //content += '<script type="text/javascript">$("#iw' + loc.id + '").idTabs();</script>'
   return content
 }
 
@@ -78,11 +79,15 @@ function updateMarkers(locations) {
 
   // Linking markers with one info window
   $.each(markers, function(i, marker) {
+    infoWindow.setContent(infoWindowContents[i]);
     google.maps.event.addListener(marker, 'click', function() {
-      infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map, this);
-      //$(infoWindowContents[i].locid).idTabs();
     });
+    google.maps.event.addListener(infoWindow, 'domready', function() {
+      locid = $(infoWindowContents[i]).attr('id');
+      $('#'+locid).idTabs();
+    });
+
   });
 
   // when the user hovers over the results on the left side, the infowindow pops up
@@ -90,7 +95,6 @@ function updateMarkers(locations) {
     $(this).click(function() {
       infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map,markers[i]);
-      //$(markers[i].locid).idTabs();
     });
   });
 }

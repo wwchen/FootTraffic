@@ -6,6 +6,7 @@
 var map = null;
 var infoWindow = new google.maps.InfoWindow();
 var markerArray = [];
+var infoWindowArray = [];
 // defaulting center of the map to SF if permission to current location isn't given
 if(!lat && !lng) {
   lat = 37.762573;
@@ -20,13 +21,17 @@ var latlng = new google.maps.LatLng(lat,lng);
 function makeMarker(options) {
   var pushPin = new google.maps.Marker({map:map});
   pushPin.setOptions(options);
-  google.maps.event.addListener(pushPin, 'click', function() {
-    infoWindow.setOptions(options);
-    infoWindow.open(map, pushPin);
-    $(options.locid).idTabs();
-  });
   markerArray.push(pushPin);
   return pushPin;
+}
+
+/*
+ * Creates a Google Maps InfoWindow
+ * http://code.google.com/apis/maps/documentation/javascript/reference.html#InfoWindowOptions
+ */
+function makeInfoWindow(options) {
+  var infowin = new google.maps.InfoWindow(options);
+  infoWindowArray.push(infowin);
 }
 
 /*
@@ -65,10 +70,9 @@ function createContent(loc) {
  * Clears out existing markers and make new ones, with the locations json
  */
 function updateMarkers(locations) {
-  // deleting all the existing markers
-  for(var i=0; i<markerArray.length; i++) {
-    markerArray[i].setMap(null);
-  }
+  // deleting all the existing markers and infowindows
+  infoWindowArray = [];
+  $.each(markerArray, function(i,v) { v.setMap(null); });
 
   // populating markers onto the map
   for(var i in locations) {
@@ -77,16 +81,32 @@ function updateMarkers(locations) {
       icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/icons/red-dot.png'),
       position: new google.maps.LatLng(loc.latitude, loc.longitude),
       title: loc.name,
+      locid: '#iw' + loc.id + ' ul'
+    });
+    makeInfoWindow({
+      position: new google.maps.LatLng(loc.latitude, loc.longitude),
       content: createContent(loc),
       locid: '#iw' + loc.id + ' ul'
     });
+
+    google.maps.event.addListener(pushPin, 'click', function() {
+      infoWindow.open(map, pushPin);
+    });
   }
+
+  // bind the marker with the infowindow
+  google.maps.event.addListener(pushPin, 'click', function() {
+    infoWindow.setOptions(options);
+    infoWindow.open(map, pushPin);
+    $(options.locid).idTabs();
+  });
 
   // when the user hovers over the results on the left side, the infowindow pops up
   $("#results div").each(function(index) {
     $(this).click(function() {
       console.log(index);
       infoWindow.open(map,markerArray[index]);
+      $(markerArray[index].locid).idTabs();
     });
   });
 }

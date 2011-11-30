@@ -79,8 +79,8 @@ function updateMarkers(locations) {
 
   // Linking markers with one info window
   $.each(markers, function(i, marker) {
-    infoWindow.setContent(infoWindowContents[i]);
     google.maps.event.addListener(marker, 'click', function() {
+      infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map, this);
     });
     google.maps.event.addListener(infoWindow, 'domready', function() {

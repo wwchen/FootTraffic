@@ -82,6 +82,7 @@ function updateMarkers(locations) {
     google.maps.event.addListener(marker, 'click', function() {
       infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map, this);
+      map.setCenter(marker.getPosition());
     });
     google.maps.event.addListener(infoWindow, 'domready', function() {
       locid = $(infoWindowContents[i]).attr('id');
@@ -95,6 +96,7 @@ function updateMarkers(locations) {
     $(this).click(function() {
       infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map,markers[i]);
+      map.setCenter(markers[i].getPosition());
     });
   });
 }

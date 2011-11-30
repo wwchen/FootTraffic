@@ -52,8 +52,8 @@ function createContent(loc) {
 
   var content = '<div id="iw' + loc.id + '" class="infowindow"><ul>'
   content += '<li><a href="#tab1" class="selected">Traffic</a></li>'
-  content += '<li><a href="#tab2" class="selected">Information</a></li>'
-  content += '<li><a href="#tab3" class="selected">Other</a></li></ul>'
+  content += '<li><a href="#tab2">Information</a></li>'
+  content += '<li><a href="#tab3">Other</a></li></ul>'
   content += '<div id="tab1" style="display: block; ">'+ traffic_block + '</div>'
   content += '<div id="tab2" style="display: none; ">' + info_block + '</div>'
   content += '<div id="tab3" style="display: none; ">' + other_block + '</div></div>'

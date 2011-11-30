@@ -40,11 +40,3 @@
 }
 .infowindow div a { color:#000; font-weight:bold; }
 
-#map_container {
-  float: right;
-}
-
-#map_canvas {
-  width: 840px;
-  height: 700px;
-}

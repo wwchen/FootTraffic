@@ -13,8 +13,14 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <h1 id="logo">FootTraffic</h1>
+  <header>
+    <h1 id="logo">FootTraffic</h1>
+  </header>
+  <section id="main">
 <%= yield %>
-
+  </section>
+  <footer>
+    A CSCE 470 production.
+  </footer>
 </body>
 </html>

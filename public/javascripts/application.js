@@ -78,6 +78,12 @@ function displayDetails(loc)
   $('#info').append('<p>'+loc.address+'</p>');
   $('#info').append('<h4>'+loc.id+'</h4>');
 
+  $('#info').append('<h3>Other info</h3>');
+  $('#info').append(loc.created_at + '<br>');
+  $('#info').append(loc.types + '<br>');
+  $('#info').append(loc.website + '<br>');
+  $('#info').append(loc.place_type + '<br>');
+
   var daily_data = [];
   for(i=0; i<24; i++) { daily_data[i] = [i,loc.daily[i]] };
 

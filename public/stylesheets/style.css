@@ -61,6 +61,7 @@ a#submit {
 section#searchResults {
   overflow: hidden;
   height: 700px;
+  padding-bottom: 10px; /* bug fix */
 }
 
 /* Left pane */
@@ -88,7 +89,6 @@ div.result h3 {
 div.result span {
   font-size: 0.9em;
 }
-
 div.result:hover {
   background: #FF6103;
 }

@@ -6,7 +6,7 @@
 var map = null;
 var infoWindow = new google.maps.InfoWindow();
 var markers = [];
-var infoWindowOptions = [];
+var infoWindowContents = [];
 // defaulting center of the map to SF if permission to current location isn't given
 if(!lat && !lng) {
   lat = 37.762573;
@@ -32,7 +32,7 @@ function setMyMarker(lat,lng) {
  * Creates a Google Maps marker
  * http://code.google.com/apis/maps/documentation/javascript/reference.html#Marker
  */
-function createMarker(options) {
+function createMarker(loc) {
   markerOptions = ({
     map: map,
     icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/icons/red-dot.png'),
@@ -66,30 +66,31 @@ function createContent(loc) {
 function updateMarkers(locations) {
   // deleting all the existing markers and infowindows
   $.each(markers, function(i,v) { v.setMap(null); });
-  infoWindowOptions = [];
+  infoWindowContents = [];
   markers = []
 
   // populating markers onto the map
-  for(var i in locations) {
-    loc = locations[i].location;
+  $.each(locations, function(i, location) {
+    loc = location.location;
     markers.push(createMarker(loc));
-    infoWindowOptions.push(createContent(loc));
-  }
+    infoWindowContents.push(createContent(loc));
+  });
+
+  // Linking markers with one info window
   $.each(markers, function(i, marker) {
     google.maps.event.addListener(marker, 'click', function() {
-      infoWindow.setContent(infoWindowOptions[i]);
+      infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map, this);
-      //$(infoWindowOptions[i].locid).idTabs();
+      //$(infoWindowContents[i].locid).idTabs();
     });
   });
 
   // when the user hovers over the results on the left side, the infowindow pops up
-  $("#results div").each(function(index) {
+  $("#results div").each(function(i) {
     $(this).click(function() {
-      console.log(index);
-      infoWindow.setContent(infoWindowOptions[index]);
-      infoWindow.open(map,markers[index]);
-      $(markers[index].locid).idTabs();
+      infoWindow.setContent(infoWindowContents[i]);
+      infoWindow.open(map,markers[i]);
+      //$(markers[i].locid).idTabs();
     });
   });
 }
@@ -109,6 +110,7 @@ function initialize() {
     zoomControlOptions: { style: google.maps.ZoomControlStyle.LARGE }
   });
 
+  // close the info window when the user clicks on the map
   google.maps.event.addListener(map, 'click', function() {
     infoWindow.close();
   });

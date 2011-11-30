@@ -5,34 +5,14 @@
 
 var map = null;
 var infoWindow = new google.maps.InfoWindow();
-var markerArray = [];
-var infoWindowArray = [];
+var markers = [];
+var infoWindowOptions = [];
 // defaulting center of the map to SF if permission to current location isn't given
 if(!lat && !lng) {
   lat = 37.762573;
   lng = -122.432327;
 }
 var latlng = new google.maps.LatLng(lat,lng);
-
-/*
- * Creates a Google Maps marker
- * http://code.google.com/apis/maps/documentation/javascript/reference.html#Marker
- */
-function makeMarker(options) {
-  var pushPin = new google.maps.Marker({map:map});
-  pushPin.setOptions(options);
-  markerArray.push(pushPin);
-  return pushPin;
-}
-
-/*
- * Creates a Google Maps InfoWindow
- * http://code.google.com/apis/maps/documentation/javascript/reference.html#InfoWindowOptions
- */
-function makeInfoWindow(options) {
-  var infowin = new google.maps.InfoWindow(options);
-  infoWindowArray.push(infowin);
-}
 
 /*
  * Makes a blue marker for the user's current location
@@ -49,10 +29,24 @@ function setMyMarker(lat,lng) {
 }
 
 /*
+ * Creates a Google Maps marker
+ * http://code.google.com/apis/maps/documentation/javascript/reference.html#Marker
+ */
+function createMarker(options) {
+  markerOptions = ({
+    map: map,
+    icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/icons/red-dot.png'),
+    position: new google.maps.LatLng(loc.latitude, loc.longitude),
+    title: loc.name,
+  });
+  return new google.maps.Marker(markerOptions);
+}
+
+/*
  * The HTML for each marker's infowindow
  */
 function createContent(loc) {
-  var traffic_block = 'traffic pattern goes here';
+  var traffic_block = loc.name + '\' straffic pattern goes here';
   var info_block = '<h3>' + loc.name + '</h3><br>' + loc.address;
   var other_block = 'None so far';
 
@@ -71,42 +65,31 @@ function createContent(loc) {
  */
 function updateMarkers(locations) {
   // deleting all the existing markers and infowindows
-  infoWindowArray = [];
-  $.each(markerArray, function(i,v) { v.setMap(null); });
+  $.each(markers, function(i,v) { v.setMap(null); });
+  infoWindowOptions = [];
+  markers = []
 
   // populating markers onto the map
   for(var i in locations) {
     loc = locations[i].location;
-    makeMarker({
-      icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/icons/red-dot.png'),
-      position: new google.maps.LatLng(loc.latitude, loc.longitude),
-      title: loc.name,
-      locid: '#iw' + loc.id + ' ul'
-    });
-    makeInfoWindow({
-      position: new google.maps.LatLng(loc.latitude, loc.longitude),
-      content: createContent(loc),
-      locid: '#iw' + loc.id + ' ul'
-    });
-
-    google.maps.event.addListener(pushPin, 'click', function() {
-      infoWindow.open(map, pushPin);
-    });
+    markers.push(createMarker(loc));
+    infoWindowOptions.push(createContent(loc));
   }
-
-  // bind the marker with the infowindow
-  google.maps.event.addListener(pushPin, 'click', function() {
-    infoWindow.setOptions(options);
-    infoWindow.open(map, pushPin);
-    $(options.locid).idTabs();
+  $.each(markers, function(i, marker) {
+    google.maps.event.addListener(marker, 'click', function() {
+      infoWindow.setContent(infoWindowOptions[i]);
+      infoWindow.open(map, this);
+      //$(infoWindowOptions[i].locid).idTabs();
+    });
   });
 
   // when the user hovers over the results on the left side, the infowindow pops up
   $("#results div").each(function(index) {
     $(this).click(function() {
       console.log(index);
-      infoWindow.open(map,markerArray[index]);
-      $(markerArray[index].locid).idTabs();
+      infoWindow.setContent(infoWindowOptions[index]);
+      infoWindow.open(map,markers[index]);
+      $(markers[index].locid).idTabs();
     });
   });
 }

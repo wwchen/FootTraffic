@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery UI Tabs - Open on mouseover</title>
+<!--
+  <style type='text/css'>
+    @import url('http://www.sunsean.com/idTabs/main.css');
+    @import url('http://www.sunsean.com/idTabs/page.css');
+  </style>
+-->
+  <link rel="stylesheet" href="main.css" type="text/css" title='main' media="screen" />
+  <script src="javascripts/jquery-1.7.min.js"></script>
+  <script src="javascripts/jquery.idTabs.min.js"></script>
+</head>
+<body>
+
+<div id="iw9123" class="usual"> 
+  <ul> 
+    <li><a href="#tab1" class="selected">Tab 1</a></li> 
+    <li><a href="#tab2">Tab 2</a></li> 
+    <li><a href="#tab3">Tab 3</a></li> 
+  </ul> 
+  <div id="tab1" style="display: block; ">This is tab 1.</div> 
+  <div id="tab2" style="display: none; ">More content in tab 2.</div> 
+  <div id="tab3" style="display: none; ">Tab 3 is always last!</div> 
+</div> 
+ 
+<script type="text/javascript"> 
+  str =  '#iw' + '9123' +' ul';
+  $(str).idTabs(); 
+</script>
+
+</body>
+</html>
+

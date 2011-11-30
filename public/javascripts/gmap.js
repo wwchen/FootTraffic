@@ -21,6 +21,13 @@ var latlng = new google.maps.LatLng(lat,lng);
 function makeMarker(options) {
   var pushPin = new google.maps.Marker({map:map});
   pushPin.setOptions(options);
+  infoWindow.setOptions(options);
+
+  google.maps.event.addListener(pushPin, 'click', function() {
+    infoWindow.open(map, pushPin);
+    $(options.locid).idTabs();
+  });
+
   markerArray.push(pushPin);
   return pushPin;
 }
@@ -56,6 +63,7 @@ function createContent(loc) {
   var info_block = '<h3>' + loc.name + '</h3><br>' + loc.address;
   var other_block = 'None so far';
 
+  console.log(loc.id);
   var content = '<div id="iw' + loc.id + '" class="infowindow"><ul>'
   content += '<li><a href="#tab1" class="selected">Traffic</a></li>'
   content += '<li><a href="#tab2" class="selected">Information</a></li>'
@@ -104,7 +112,7 @@ function updateMarkers(locations) {
   // when the user hovers over the results on the left side, the infowindow pops up
   $("#results div").each(function(index) {
     $(this).click(function() {
-      console.log(index);
+      console.log(this.id);
       infoWindow.open(map,markerArray[index]);
       $(markerArray[index].locid).idTabs();
     });

@@ -44,6 +44,7 @@ function search()
     $.each(data, function(key, value) {
       var result = $( document.createElement('div') );
       result.attr('class', 'result');
+      result.attr('id', value.location.id);
 
       var name = $( document.createElement('h3') );
       name.text(value.location.name);

@@ -88,7 +88,11 @@ function updateMarkers(locations) {
   // when the user hovers over the results on the left side, the infowindow pops up
   $("#results div").each(function(index) {
     $(this).click(function() {
+<<<<<<< HEAD
       console.log(this.id);
+=======
+      console.log(index);
+>>>>>>> 196117f891b63ba6e341edd2be5f2c0cb8304625
       infoWindow.open(map,markerArray[index]);
       $('#iw' + this.id + ' ul').idTabs();
     });

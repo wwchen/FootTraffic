@@ -54,7 +54,6 @@ function search()
       address.appendTo(result);
 
       //result.click(function () { displayDetails(value.location) });
-
       result.appendTo('#results');
     });
 

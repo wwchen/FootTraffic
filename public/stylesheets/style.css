@@ -47,6 +47,11 @@ body
   padding: 5px 0 10px 5px;
 }
 
+.result:hover
+{
+  background: #CDC9C9;
+}
+
 #daily
 {
   width: 500px;

@@ -3,6 +3,10 @@
  * This script is loaded last
  */
 
+// WHY DOESN'T MODULUS WORK LIKE IT SHOULD, JAVASCRIPT????
+// I WASTED WAY TOO MUCH TIME ON THIS
+function Mod(X, Y) { return X - Math.floor(X/Y)*Y }
+
 var map = null;
 var infoWindow = new google.maps.InfoWindow();
 var markers = [];
@@ -13,6 +17,24 @@ if(!lat && !lng) {
   lng = -122.432327;
 }
 var latlng = new google.maps.LatLng(lat,lng);
+
+var daily_options = {
+xaxis: {
+  ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+          13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  tickLength: 0
+},
+  yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
+};
+
+var weekly_options = {
+xaxis: {
+  ticks: [[1, "Mon"], [2, "Tues"], [3, "Wed"], [4, "Thurs"],
+          [5, "Fri"], [6, "Sat"], [0, "Sun"]],
+  tickLength: 0
+},
+  yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
+};
 
 /*
  * Makes a blue marker for the user's current location
@@ -46,7 +68,8 @@ function createMarker(loc) {
  * The HTML for each marker's infowindow
  */
 function createContent(loc) {
-  var traffic_block = loc.name + '\' straffic pattern goes here';
+  var traffic_block = '<h3>Daily</h3><div id="daily"></div>';
+  traffic_block += '<h3>Weekly</h3><div id="weekly"></div>';
   var info_block = '<h3>' + loc.name + '</h3><br>' + loc.address;
   var other_block = 'None so far';
 
@@ -87,6 +110,36 @@ function updateMarkers(locations) {
     google.maps.event.addListener(infoWindow, 'domready', function() {
       locid = $(infoWindowContents[i]).attr('id');
       $('#'+locid).idTabs();
+
+      var loc = locations[i].location;
+      console.log(loc);
+
+      var daily_data = [];
+      var weekly_data = [];
+      for(i=0; i<24; i++) { daily_data[i] = [i,loc.daily[i]] };
+
+      // Convert shenanigans to local timezone shenanigans
+      date = new Date();
+      offset = date.getTimezoneOffset()/60;
+      daily_data = daily_data.map(function (i) {
+        return [Mod((i[0]-offset),24), i[1]];
+      });
+
+      for(i=0; i<7; i++) { weekly_data[i] = [i,loc.weekly[i]] };
+
+      $.plot( $('#daily'), [
+        {
+          data: daily_data,
+          bars: { show: true, align: 'center' }
+        }
+      ], daily_options);
+
+      $.plot( $('#weekly'), [
+        {
+          data: weekly_data,
+        bars: { show: true, align: 'center' }
+        }
+      ], weekly_options);
     });
 
   });

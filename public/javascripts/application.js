@@ -72,11 +72,20 @@ function search()
 
 function displayDetails(loc)
 {
+  var latlng = loc.latitude + ',' + loc.longitude
+  var url = 'http://maps.googleapis.com/maps/api/staticmap?center=' + latlng + '&zoom=16&size=550x100&markers=color:blue%7C' + latlng + '&sensor=false'
   $('#info').empty();
 
   $('#info').append('<h1>'+loc.name+'</h1>');
   $('#info').append('<p>'+loc.address+'</p>');
   $('#info').append('<h4>'+loc.id+'</h4>');
+  $('#info').append('<img src="'+url+'" />');
+
+  $('#info').append('<h3>Other info</h3>');
+  $('#info').append(loc.created_at + '<br>');
+  $('#info').append(loc.types + '<br>');
+  $('#info').append(loc.website + '<br>');
+  $('#info').append(loc.place_type + '<br>');
 
   var daily_data = [];
   for(i=0; i<24; i++) { daily_data[i] = [i,loc.daily[i]] };

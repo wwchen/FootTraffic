@@ -7,6 +7,7 @@
 // I WASTED WAY TOO MUCH TIME ON THIS
 function Mod(X, Y) { return X - Math.floor(X/Y)*Y }
 
+var loc_data = null;
 var map = null;
 var infoWindow = new google.maps.InfoWindow();
 var markers = [];
@@ -64,6 +65,7 @@ function plot_stuff(loc) {
       bars: { show: true, align: 'center' }
     }
   ], weekly_options);
+  console.log("done");
 }
 
 /*
@@ -118,6 +120,7 @@ function createContent(loc) {
  * Clears out existing markers and make new ones, with the locations json
  */
 function updateMarkers(locations) {
+  loc_data = locations;
   // deleting all the existing markers and infowindows
   $.each(markers, function(i,v) { v.setMap(null); });
   infoWindowContents = [];
@@ -143,13 +146,7 @@ function updateMarkers(locations) {
     google.maps.event.addListener(infoWindow, 'domready', function() {
       locid = $(infoWindowContents[i]).attr('id');
       $('#'+locid).idTabs();
-
-      console.log(current);
-      if(i == current) {
-        var loc = locations[i].location;
-        console.log(loc);
-        plot_stuff(loc);
-      }
+      plot_stuff(locations[i].location);
     });
 
   });

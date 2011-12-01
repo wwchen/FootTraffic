@@ -15,9 +15,6 @@ function getLocation()
     lat = 37.762573;
     lng = -122.432327;
   }
-  console.log('loaded!');
-  console.log(lat);
-  console.log(lng);
 }
 
 function search()

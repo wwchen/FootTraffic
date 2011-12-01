@@ -207,8 +207,6 @@ function updateLocation() {
  * Initialization function that gets called at load time
  */
 function initialize() {
-  console.log(lat);
-  console.log(lng);
   var latlng = new google.maps.LatLng(lat,lng);
   map = new google.maps.Map(document.getElementById("map_canvas"), {
     streetViewControl: false,

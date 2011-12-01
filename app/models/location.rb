@@ -59,7 +59,8 @@ class Location < ActiveRecord::Base
 
       if(params[:lat] && params[:lng])
         with(:coordinates).near(params[:lat], params[:lng],
-                                :precision => params[:precision])
+                                :precision => params[:precision],
+                                :boost     => 3)
       end
 
       order_by :score, :desc
@@ -101,10 +102,13 @@ class Location < ActiveRecord::Base
         end
       end
 
+      score = score / (0.1*Geocoder::Calculations.distance_between([hit.result.latitude,hit.result.longitude],[params[:lat],params[:lng]]))
+
       results << [score, hit.result]
     end
 
     results.sort! { |x,y| y[0] <=> x[0] }
+    #ap results.map { |i| "#{i[0]} => #{i[1].name}" }
     results.map! { |i| i[1] }
 
     #results.each do |r|

@@ -114,13 +114,13 @@ div.result:hover {
 }
 
 #daily {
-  width: 500px;
-  height: 150px;
+  width: 200;
+  height: 50px;
 }
 
 #weekly {
-  width: 500px;
-  height: 150px;
+  width: 200px;
+  height: 50px;
 }
 #info {
   margin-left: 410px;

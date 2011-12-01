@@ -11,6 +11,7 @@ var map = null;
 var infoWindow = new google.maps.InfoWindow();
 var markers = [];
 var infoWindowContents = [];
+var current = -1;
 // defaulting center of the map to SF if permission to current location isn't given
 if(!lat && !lng) {
   lat = 37.762573;
@@ -35,6 +36,35 @@ xaxis: {
 },
   yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
 };
+
+function plot_stuff(loc) {
+  var daily_data = [];
+  var weekly_data = [];
+  for(i=0; i<24; i++) { daily_data[i] = [i,loc.daily[i]] };
+
+  // Convert shenanigans to local timezone shenanigans
+  date = new Date();
+  offset = date.getTimezoneOffset()/60;
+  daily_data = daily_data.map(function (i) {
+    return [Mod((i[0]-offset),24), i[1]];
+  });
+
+  for(i=0; i<7; i++) { weekly_data[i] = [i,loc.weekly[i]] };
+
+  $.plot( $('#daily'), [
+    {
+      data: daily_data,
+      bars: { show: true, align: 'center' }
+    }
+  ], daily_options);
+
+  $.plot( $('#weekly'), [
+    {
+      data: weekly_data,
+      bars: { show: true, align: 'center' }
+    }
+  ], weekly_options);
+}
 
 /*
  * Makes a blue marker for the user's current location
@@ -105,41 +135,21 @@ function updateMarkers(locations) {
     google.maps.event.addListener(marker, 'click', function() {
       infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map, this);
+
+      current = i;
+
       map.setCenter(marker.getPosition());
     });
     google.maps.event.addListener(infoWindow, 'domready', function() {
       locid = $(infoWindowContents[i]).attr('id');
       $('#'+locid).idTabs();
 
-      var loc = locations[i].location;
-      console.log(loc);
-
-      var daily_data = [];
-      var weekly_data = [];
-      for(i=0; i<24; i++) { daily_data[i] = [i,loc.daily[i]] };
-
-      // Convert shenanigans to local timezone shenanigans
-      date = new Date();
-      offset = date.getTimezoneOffset()/60;
-      daily_data = daily_data.map(function (i) {
-        return [Mod((i[0]-offset),24), i[1]];
-      });
-
-      for(i=0; i<7; i++) { weekly_data[i] = [i,loc.weekly[i]] };
-
-      $.plot( $('#daily'), [
-        {
-          data: daily_data,
-          bars: { show: true, align: 'center' }
-        }
-      ], daily_options);
-
-      $.plot( $('#weekly'), [
-        {
-          data: weekly_data,
-        bars: { show: true, align: 'center' }
-        }
-      ], weekly_options);
+      console.log(current);
+      if(i == current) {
+        var loc = locations[i].location;
+        console.log(loc);
+        plot_stuff(loc);
+      }
     });
 
   });
@@ -150,6 +160,8 @@ function updateMarkers(locations) {
       infoWindow.setContent(infoWindowContents[i]);
       infoWindow.open(map,markers[i]);
       map.setCenter(markers[i].getPosition());
+
+      current = i;
     });
   });
 }

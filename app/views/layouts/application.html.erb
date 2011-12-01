@@ -4,14 +4,23 @@
   <title>FootTraffic</title>
   <%= stylesheet_link_tag :all %>
   <link href='http://fonts.googleapis.com/css?family=Rammetto+One' rel='stylesheet' type='text/css'>
+  <%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true" %>
   <%= javascript_include_tag "jquery-1.7.min" %>
   <%= javascript_include_tag "flot/jquery.flot.min.js" %>
+  <%= javascript_include_tag "jquery.idTabs.min.js" %>
   <%= javascript_include_tag "application.js" %>
+  <%= javascript_include_tag "gmaps.js" %>
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <h1 id="logo">FootTraffic</h1>
+  <header>
+    <h1 id="logo">FootTraffic</h1>
+  </header>
+  <section id="main">
 <%= yield %>
-
+  </section>
+  <footer>
+    By Eric Wood and William Chen for Dr. Caverlee's CSCE 470 class
+  </footer>
 </body>
 </html>

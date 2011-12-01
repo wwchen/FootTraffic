@@ -2,28 +2,6 @@ var search_url = '/locations?q=';
 var lat;
 var lng;
 
-// WHY DOESN'T MODULUS WORK LIKE IT SHOULD, JAVASCRIPT????
-// I WASTED WAY TOO MUCH TIME ON THIS
-function Mod(X, Y) { return X - Math.floor(X/Y)*Y }
-
-var daily_options = {
-xaxis: {
-  ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-          13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-  tickLength: 0
-},
-  yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
-};
-
-var weekly_options = {
-xaxis: {
-  ticks: [[1, "Mon"], [2, "Tues"], [3, "Wed"], [4, "Thurs"],
-          [5, "Fri"], [6, "Sat"], [0, "Sun"]],
-  tickLength: 0
-},
-  yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
-};
-
 function getLocation()
 {
   if (navigator.geolocation)
@@ -50,6 +28,7 @@ function search()
   // Clear the results div
   $('#results').empty();
 
+
   $.getJSON(url, function (data) {
     $.each(data, function(key, value) {
       var result = $( document.createElement('div') );
@@ -67,6 +46,8 @@ function search()
 
       result.appendTo('#results');
     });
+
+    updateMarkers(data);
   });
 }
 
@@ -74,12 +55,18 @@ function displayDetails(loc)
 {
   var latlng = loc.latitude + ',' + loc.longitude
   var url = 'http://maps.googleapis.com/maps/api/staticmap?center=' + latlng + '&zoom=16&size=550x100&markers=color:blue%7C' + latlng + '&sensor=false'
-  $('#info').empty();
+  //$('#info').empty();
 
-  $('#info').append('<h1>'+loc.name+'</h1>');
-  $('#info').append('<p>'+loc.address+'</p>');
-  $('#info').append('<h4>'+loc.id+'</h4>');
-  $('#info').append('<img src="'+url+'" />');
+  //$('#info').append('<h1>'+loc.name+'</h1>');
+  //$('#info').append('<p>'+loc.address+'</p>');
+  //$('#info').append('<h4>'+loc.id+'</h4>');
+  //$('#info').append('<img src="'+url+'" />');
+
+  //$('#info').append('<h3>Other info</h3>');
+  //$('#info').append(loc.created_at + '<br>');
+  //$('#info').append(loc.types + '<br>');
+  //$('#info').append(loc.website + '<br>');
+  //$('#info').append(loc.place_type + '<br>');
 
   $('#info').append('<h3>Other info</h3>');
   $('#info').append(loc.created_at + '<br>');
@@ -99,29 +86,18 @@ function displayDetails(loc)
   //console.log(daily_data.map(function(i){return i[0];}));
   //console.log(daily_data.map(function(i){return i[1];}));
 
-  $('#info').append('<h3>Daily Traffic</h3>');
-  daily = $( document.createElement('div') );
-  daily.attr('id', 'daily');
-  daily.appendTo($('#info'));
-  $.plot( $('#daily'), [
-    {
-      data: daily_data,
-      bars: { show: true, align: 'center' }
-    }
-  ], daily_options);
-
   var weekly_data = [];
   for(i=0; i<7; i++) { weekly_data[i] = [i,loc.weekly[i]] };
-  $('#info').append('<h3>Weekly Traffic</h3>');
-  weekly = $( document.createElement('div') );
-  weekly.attr('id', 'weekly');
-  weekly.appendTo($('#info'));
-  $.plot( $('#weekly'), [
-    {
-      data: weekly_data,
-      bars: { show: true, align: 'center' }
-    }
-  ], weekly_options);
+  //$('#info').append('<h3>Weekly Traffic</h3>');
+  //weekly = $( document.createElement('div') );
+  //weekly.attr('id', 'weekly');
+  //weekly.appendTo($('#info'));
+  //$.plot( $('#weekly'), [
+  //  {
+  //    data: weekly_data,
+  //    bars: { show: true, align: 'center' }
+  //  }
+  //], weekly_options);
 }
 
 $(document).ready(function () {
@@ -130,5 +106,6 @@ $(document).ready(function () {
   $('#q').bind("keydown", function(e) {
     if (e.keyCode == 13) { search(); }
   });
+  $('#q').focus();
 });
 

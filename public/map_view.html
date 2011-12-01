@@ -17,7 +17,6 @@
       var map = null;
       var latlng = new google.maps.LatLng(37.762573,-122.432327);
       var infoWindow = new google.maps.InfoWindow();
-      //var markerArray = [];
 
       function makeMarker(options) {
         var pushPin = new google.maps.Marker({map:map});
@@ -25,8 +24,8 @@
         google.maps.event.addListener(pushPin, 'click', function() {
           infoWindow.setOptions(options);
           infoWindow.open(map, pushPin);
+					$(options.locid).idTabs();
         });
-        //markerArray.push(pushPin);
         return pushPin;
       }
 
@@ -43,12 +42,12 @@
 
       function createContent(loc) {
         var content = '<div id="iw' + loc.id + '" class="infowindow"><ul>'
-        content += '<li><a href="#tab1" class="selected">Tab 1</a></li>'
-        content += '<li><a href="#tab2" class="selected">Tab 2</a></li>'
-        content += '<li><a href="#tab3" class="selected">Tab 3</a></li></ul>'
-        content += '<div id="tab1" style="display: block; ">'+ loc.id +'</div>'
-        content += '<div id="tab2" style="display: none; ">More content in tab 2.</div>'
-        content += '<div id="tab3" style="display: none; ">Tab 3 is always last!</div></div>'
+        content += '<li><a href="#tab1" class="selected">Traffic</a></li>'
+        content += '<li><a href="#tab2" class="selected">Information</a></li>'
+        content += '<li><a href="#tab3" class="selected">Other</a></li></ul>'
+        content += '<div id="tab1" style="display: block; ">'+ loc.name +'</div>'
+        content += '<div id="tab2" style="display: none; ">Something</div>'
+        content += '<div id="tab3" style="display: none; ">' + loc.address + '</div></div>'
         return content
       }
 
@@ -71,9 +70,8 @@
             position: new google.maps.LatLng(loc.latitude, loc.longitude),
             title: loc.name,
             content: createContent(loc),
+						locid: '#iw' + loc.id + ' ul'
           });
-          var locid = '#iw' + loc.id + ' ul';
-          $(locid).idTabs();
         }
 
         google.maps.event.addListener(map, 'click', function() {
@@ -85,6 +83,7 @@
     </script>
   </head>
   <body>
+    <div> soemthing else</div>
     <div id="map_canvas"></div>
   </body>
 </html>

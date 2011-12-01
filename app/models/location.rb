@@ -31,7 +31,7 @@ class Location < ActiveRecord::Base
     text   :place_type, :boost => 4.0
     text   :types,      :boost => 3.0
     text   :tag_list,   :boost => 1.0
-    text   :website
+    #text   :website
     string :twitter_id
     string :phone
     float  :rating

@@ -1,15 +1,18 @@
-<div id="searchBox">
+<section id="searchBox">
   <%= text_field_tag :q %>
   <a href="javascript:;" id="submit">Search</a>
   <input type="radio" name="busy" value="not_busy" checked>Not crowded</input>
   <input type="radio" name="busy" value="busy">Popular</input>
-</div>
+</section>
 
 
-<div id="results">
-  <h3>No results, bro</h3>
-</div>
+<section id="searchResults">
+  <div id="map_container">
+    <div id="map_canvas"></div>
+  </div>
 
-<div id="info">
-  <h2>Dude, search for something.</h2>
-</div>
+  <div id="results">
+    <h3 style="padding: 1em; text-align: center">No results, bro</h3>
+  </div>
+
+</section>

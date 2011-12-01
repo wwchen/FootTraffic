@@ -16,10 +16,10 @@ class LocationsController < ApplicationController
       query = Hash.new
       query[:keywords]  = params[:q]
       # TODO: uncomment me when not debugging
-      #query[:lat]       = params[:lat].to_f
-      #query[:lng]       = params[:lng].to_f
-      query[:lat]       = 37.776549
-      query[:lng]       = -122.429752
+      query[:lat]       = params[:lat].to_f
+      query[:lng]       = params[:lng].to_f
+      #query[:lat]       = 37.776549
+      #query[:lng]       = -122.429752
       query[:precision] = 3
       query[:time]      = params[:time]
       query[:busy]      = params[:busy]

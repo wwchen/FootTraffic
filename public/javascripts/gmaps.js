@@ -14,13 +14,6 @@ var infoWindowContents = [];
 
 var current = -1;
 
-// defaulting center of the map to SF if permission to current location isn't given
-if(!lat && !lng) {
-  lat = 37.762573;
-  lng = -122.432327;
-}
-var latlng = new google.maps.LatLng(lat,lng);
-
 /**
  * Global variables for Flot
  **/
@@ -197,6 +190,9 @@ function resizeMain() {
  * Initialization function that gets called at load time
  */
 function initialize() {
+  console.log(lat);
+  console.log(lng);
+  var latlng = new google.maps.LatLng(lat,lng);
   map = new google.maps.Map(document.getElementById("map_canvas"), {
     streetViewControl: false,
     panControl: false,

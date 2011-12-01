@@ -4,13 +4,20 @@ var lng;
 
 function getLocation()
 {
-  if (navigator.geolocation)
-  {
+  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
       lat = position.coords.latitude;
       lng = position.coords.longitude;
     });
   }
+  else {
+    // defaulting center of the map to SF if permission to current location isn't given
+    lat = 37.762573;
+    lng = -122.432327;
+  }
+  console.log('loaded!');
+  console.log(lat);
+  console.log(lng);
 }
 
 function search()

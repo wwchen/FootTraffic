@@ -20,7 +20,7 @@ class LocationsController < ApplicationController
       query[:lng]       = params[:lng].to_f
       #query[:lat]       = 37.776549
       #query[:lng]       = -122.429752
-      query[:precision] = 3
+      query[:precision] = 4
       query[:time]      = params[:time]
       query[:busy]      = params[:busy]
 

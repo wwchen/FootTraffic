@@ -11,7 +11,9 @@ var map = null;
 var infoWindow = new google.maps.InfoWindow();
 var markers = [];
 var infoWindowContents = [];
+
 var current = -1;
+
 // defaulting center of the map to SF if permission to current location isn't given
 if(!lat && !lng) {
   lat = 37.762573;
@@ -157,7 +159,11 @@ function updateMarkers(locations) {
     google.maps.event.addListener(infoWindow, 'domready', function() {
       locid = $(infoWindowContents[i]).attr('id');
       $('#'+locid).idTabs();
-      plot_stuff(locations[i].location);
+      console.log(i);
+
+      if(i == current) {
+        plot_stuff(locations[i].location);
+      }
     });
 
   });

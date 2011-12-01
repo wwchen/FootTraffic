@@ -102,6 +102,16 @@ function updateMarkers(locations) {
 }
 
 /*
+ * Calculates the height of the main div (#searchResults), so it fits the whole page
+ *
+ */
+function resizeMain() {
+  height = $(window).height();
+  other = $("header").height() + $("#searchBox").height() + $("footer").height() + 50; /* 50 is arbitrary, to account for paddings (which are in ems) */
+  $("#searchResults").css('height', height-other);
+}
+
+/*
  * Initialization function that gets called at load time
  */
 function initialize() {
@@ -123,3 +133,11 @@ function initialize() {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+// fit the searchResults div
+$(function() {
+  resizeMain();
+  $(window).resize(function() {
+    resizeMain();
+  });
+});

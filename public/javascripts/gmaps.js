@@ -186,6 +186,24 @@ function resizeMain() {
 }
 
 /*
+ * Get the user's location and center the map
+ */
+function updateLocation() {
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+      setMyMarker(lat,lng);
+      map.setCenter(myLocation);
+    }); 
+  }
+  lat = 37.762573;
+  lng = -122.432327;
+  setMyMarker(lat,lng);
+  map.setCenter(myLocation);
+}
+
+/*
  * Initialization function that gets called at load time
  */
 function initialize() {
@@ -202,6 +220,7 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     zoomControlOptions: { style: google.maps.ZoomControlStyle.LARGE }
   });
+  updateLocation();
 
   // close the info window when the user clicks on the map
   google.maps.event.addListener(map, 'click', function() {

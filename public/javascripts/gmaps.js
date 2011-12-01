@@ -116,7 +116,11 @@ function createMarker(loc) {
 function createContent(loc) {
   var traffic_block = '<h3>Daily</h3><div id="daily"></div>';
   traffic_block += '<h3>Weekly</h3><div id="weekly"></div>';
-  var info_block = '<h3>' + loc.name + '</h3><br>' + loc.address;
+  var info_block = '<h3>' + loc.name + '</h3><br>' + loc.address + '<br>';
+  info_block += loc.phone ? '<br>' + loc.phone : '';
+  info_block += loc.website ? '<br><a href="' + loc.website + '">' + loc.website + '</a>' : '';
+  info_block += '<br>rating:<a href="' + loc.url + '">' + loc.rating + '</a>';
+  info_block += loc.types ? '<br>' + loc.types : '';
   var other_block = 'None so far';
 
   var content = '<div id="iw' + loc.id + '" class="infowindow"><ul>'

@@ -10,13 +10,22 @@ namespace :db do
       while(line = file.gets)
         data = line.split("\t")
         if(data.length == 7)
+          matching = /I'm at (.*?) (\(|w\/|http)/.match(data[5])
+          matching ||= /\(@ (([^w]|w[^\/])*)(w\/.*)?\)/.match(data[5])
+          name = matching[1] if matching
+
+          url_match = /(http:\/\/[^ ]*)$/.match(data[5])
+          url = url_match[1] if url_match
+
           checkin = Checkin.create(
-            :user_id   => data[0].strip,
-            :tweet_id  => data[1].strip,
-            :latitude  => data[2].strip,
-            :longitude => data[3].strip,
-            :created   => DateTime.parse(data[4]),
-            :place_id  => data[6].strip
+            :user_id    => data[0].strip,
+            #:tweet_id   => data[1].strip,
+            :latitude   => data[2].strip.to_f,
+            :longitude  => data[3].strip.to_f,
+            :post_date  => DateTime.parse(data[4]),
+            :place_id   => data[6].strip,
+            :place_name => name,
+            :url        => url,
           )
           checkin.save
           p checkin.id

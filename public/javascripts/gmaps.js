@@ -163,7 +163,6 @@ function updateMarkers(locations) {
     google.maps.event.addListener(infoWindow, 'domready', function() {
       locid = $(infoWindowContents[i]).attr('id');
       $('#'+locid).idTabs();
-      console.log(i);
 
       if(i == current) {
         plot_stuff(locations[i].location);

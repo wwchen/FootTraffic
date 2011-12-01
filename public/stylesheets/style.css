@@ -73,7 +73,6 @@ div#results {
   overflow: auto;
 }
 
-
 div.result {
   background: #FFF;
   padding: 0.2em;
@@ -101,30 +100,22 @@ div.result:hover {
 }
 
 /* Right pane */
+/* Google maps stuff */
 #map_container {
   float: right;
   margin-left: -370px;
   height: 100%;
   width: 100%;
 }
-
 #map_canvas {
   margin-left: 370px;
   height: 100%;
 }
 
-#daily {
-  width: 600px;
+/* Flot stuff */
+#daily, #weekly {
+  width: 450px; /* dictated by .infowindow's CSS */
   height: 100px;
-}
-
-#weekly {
-  width: 600px;
-  height: 100px;
-}
-#info {
-  margin-left: 410px;
-  margin-right: 10px;
 }
 
 /**

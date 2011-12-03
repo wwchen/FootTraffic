@@ -68,7 +68,7 @@ section#searchResults {
 div#results {
   float: left;
   border: solid #000 1px;
-  width: 360px;
+  width: 15em;
   height: 100%;
   overflow: auto;
 }
@@ -103,12 +103,12 @@ div.result:hover {
 /* Google maps stuff */
 #map_container {
   float: right;
-  margin-left: -370px;
+  margin-left: -15.2em; /* a little more than the left pane's width */
   height: 100%;
   width: 100%;
 }
 #map_canvas {
-  margin-left: 370px;
+  margin-left: 15.2em; /* a little more than the left pane's width */
   height: 100%;
 }
 

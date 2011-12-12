@@ -1,0 +1,55 @@
+%
+% Project proposal
+% Guidelines can be found at: http://courses.cse.tamu.edu/caverlee/csce470/project.html
+% 
+\documentclass{article}
+\renewcommand{\contentsname}{Table of Contents}
+\newcommand{\PaperTitle}{Executive Summary}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+%\hypersetup{colorlinks=false}
+
+\begin{document}
+
+%
+% Title Page
+\input{titlepage.tex}
+
+%
+% Document
+% Motivation and Related Works
+\section{Motivation and Related Works}
+We are seeing an increasing amount of location sharing from social services Foursquare, Facebook, Google Latitude, etc.,
+and we want to harness these traffic to recommend venues to users based on the traffic patterns. Most location-based
+search engines today rank results based on proximity, user rating, category, and popularity. We want to add another 
+dimension to location-based searches, and that is ranking based on observed traffic similarities.
+This ``\textit{temporal dynamics embedded in the checkins} from location sharing services''
+\footnote{``\href{http://faculty.cs.tamu.edu/caverlee/pubs/cheng11cikm.pdf}{Toward Traffic-Driven Location-Based Web Search}''
+  by Zhiyuan Cheng, James Caverlee, Krishna Y. Kamath, and Kyumin Lee; CIKM 2011},
+approach is introduced by a research paper authored by Zhiyuan Cheng, James Caverlee, Krishna Y. Kamath,
+and Kyumin Lee, and the foundation of FootTraffic search engine will be based on the ideas from the paper
+\footnote{A copy of the paper can be found at: \url{http://faculty.cs.tamu.edu/caverlee/pubs/cheng11cikm.pdf}}
+aforementioned.
+
+\section{Our Approach}
+\begin{wrapfigure}{r}{6cm}
+\includegraphics[width=6cm]{flowchart.png}
+\caption{Workflow}
+\end{wrapfigure}
+We have put in a lot of thought into creating an efficient and optimized way of gathering, storing, and serving data. 
+
+%We learned about a lot of cool tools and services in the process of finding solutions that fitted our needs. 
+Lorem ipsum dolor sit aet, consectetur adipiscing elit. Maecenas in quam risus. Maecenas orci neque, vulputate in ultrices sagittis, accumsan vel lectus. Curabitur quis feugiat magna. Quisque porttitor tempor leo, nec gravida sem vestibulum quis. Nullam viverra nunc ut felis volutpat ac ullamcorper velit dictum. Aenean bibendum neque non orci porta venenatis. Pellentesque sed tellus arcu, et consequat elit. Ut lorem metus, suscipit ut tincidunt et, fermentum quis lorem. Aenean quis diam vitae sem gravida pretium.
+
+\subsection{Ranking}
+\subsection{Challenges}
+
+\section{Evaluation}
+
+%are at-peak and what bars will be at-peak when they arrive? \footnote{Example is taken from the paper}
+%like the one at home, so he can meet new friends. \footnotemark[\value{footnote}]
+
+\end{document}

@@ -39,7 +39,17 @@ aforementioned.
 \includegraphics[width=6cm]{flowchart.png}
 \caption{Workflow}
 \end{wrapfigure}
-We have put in a lot of thought into creating an efficient and optimized way of gathering, storing, and serving data. 
+We have put in a lot of thought into creating efficient and optimized ways of gathering, storing, and serving data. The final solution
+we came with is outline in the flowchart shown to the right. In the backend, we have scripts, an Apache server with Phusion Passenger
+to run Ruby on Rails, a \href{Solr}{http://lucene.apache.org/solr/} instance, and a Postgres database server. In the frontend, we used
+a couple Javascript libraries and APIs, such as JQuery, Google Fonts, Google Maps, flot, to handle events and transitions. 
+\\ \\
+We have two scripts that are run continuously and concurrently. One is responsible for keeping a connection open with Twitter's realtime
+search API, filtering for FourSquare tweets, and inserting an entry to a database table (Checkins). The other is responsible for processing
+entries in the Checkins table, then requesting information from Yelp and Google. If the venue exists already in our database, no additional
+API calls are made, and the traffic data is updated accordingly. 
+\\ \\
+
 
 %We learned about a lot of cool tools and services in the process of finding solutions that fitted our needs. 
 Lorem ipsum dolor sit aet, consectetur adipiscing elit. Maecenas in quam risus. Maecenas orci neque, vulputate in ultrices sagittis, accumsan vel lectus. Curabitur quis feugiat magna. Quisque porttitor tempor leo, nec gravida sem vestibulum quis. Nullam viverra nunc ut felis volutpat ac ullamcorper velit dictum. Aenean bibendum neque non orci porta venenatis. Pellentesque sed tellus arcu, et consequat elit. Ut lorem metus, suscipit ut tincidunt et, fermentum quis lorem. Aenean quis diam vitae sem gravida pretium.

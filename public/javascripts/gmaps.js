@@ -22,7 +22,7 @@ var daily_options = {
     ticks: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
     tickLength: 0
   },
-  yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
+  //yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
 };
 
 var weekly_options = {
@@ -30,7 +30,7 @@ var weekly_options = {
     ticks: [[1, "Mon"], [2, "Tues"], [3, "Wed"], [4, "Thurs"], [5, "Fri"], [6, "Sat"], [0, "Sun"]],
     tickLength: 0
   },
-  yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
+  //yaxis: { ticks: [0.0, 0.2, 0.4, 0.6, 0.8, 1] }
 };
 
 /**

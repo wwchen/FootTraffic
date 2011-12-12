@@ -82,7 +82,7 @@ class YelpRequest
     code = resp.code.to_i
     if(code == 200)
       return resp.body
-    elsif(code == 303)
+    elsif(code == 303 || code == 301)
       puts "303 => redirecting..."
       self.get(resp['Location'])
     else

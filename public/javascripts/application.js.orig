@@ -8,10 +8,14 @@ function search()
   var data = $('#q').val();
 
   var url = search_url + encodeURI(data);
-
+<<<<<<< HEAD
+  url = url + '&lat='  + lat;
+  url = url + '&lng='  + lng;
+=======
   // variables updated in gmaps.js
   url = url + '&lat=' + lat;
   url = url + '&lng=' + lng;
+>>>>>>> 2d9f3099a0cf4fd3d7d4e2c44ed0d83a3042f654
   
   if($('input:radio[name=busy]:checked').val() == 'busy') {
     url = url + '&busy=true'

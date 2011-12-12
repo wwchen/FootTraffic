@@ -76,7 +76,7 @@ class Location < ActiveRecord::Base
     results = Array.new
     s.hits.each do |hit|
       if(hit.result.rating)
-        score = hit.score * hit.result.rating
+        score = hit.score * 0.3 * hit.result.rating
       else
         # TODO: should we give a weight to unrated locations??
         score = hit.score
@@ -95,17 +95,25 @@ class Location < ActiveRecord::Base
 
         # TODO: What weight should hourly patterns get versus weekly patterns?
         if(params[:busy])
-          score = score * hour
+          ap "#{hit.result.name}: 10 * (#{hour} / #{hit.result.daily.max}) = #{(10 * (hour / hit.result.daily.max))}"
+          score = score * (10 * (hour / hit.result.daily.max))
+          score = score * (10 * (day / hit.result.weekly.max))
         else
-          # TODO: What if the pattern is 1? Should we discard it or pad it slightly?
+          # TODO?: What if the pattern is 1? Should we discard it or pad it slightly?
           score = score * (1 - hour)
+          score = score * (1 - day)
         end
       end
 
-      score = score / (0.1*Geocoder::Calculations.distance_between([hit.result.latitude,hit.result.longitude],[params[:lat],params[:lng]]))
+      if(params[:lat] && params[:lng])
+        score = score / (0.1*Geocoder::Calculations.distance_between([hit.result.latitude,hit.result.longitude],[params[:lat],params[:lng]]))
+      end
 
       results << [score, hit.result]
     end
+
+    # Throw away results with less than three checkins
+    results.reject! { |i| i[1].daily.max >= 0.5 }
 
     results.sort! { |x,y| y[0] <=> x[0] }
     #ap results.map { |i| "#{i[0]} => #{i[1].name}" }

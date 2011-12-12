@@ -1,5 +1,5 @@
 <section id="searchBox">
-  <%= text_field_tag :q %>
+<%= text_field_tag :q, '', {:placeholder => 'Place name, category, etc'} %>
   <a href="javascript:;" id="submit">Search</a>
   <input type="radio" name="busy" value="not_busy" checked>Not crowded</input>
   <input type="radio" name="busy" value="busy">Popular</input>
@@ -12,7 +12,8 @@
   </div>
 
   <div id="results">
-    <h3 style="padding: 1em; text-align: center">No results, bro</h3>
+    <h2 style="padding: 1em; text-align: center; font-weight: bold">Search for something!</h2>
+    <p style="padding: 1em; font-size: 12pt; text-align: center">Place names, food types, points of interest. Anything and everything.</p>
   </div>
 
 </section>

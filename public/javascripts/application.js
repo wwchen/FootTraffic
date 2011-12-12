@@ -22,8 +22,8 @@ function search()
   var data = $('#q').val();
 
   var url = search_url + encodeURI(data);
-  url = url + '&lat=' + lat;
-  url = url + '&lng=' + lng;
+  url = url + '&lat='  + lat;
+  url = url + '&lng='  + lng;
   
   if($('input:radio[name=busy]:checked').val() == 'busy') {
     url = url + '&busy=true'

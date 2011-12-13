@@ -49,9 +49,6 @@ search API, filtering for FourSquare tweets, and inserting an entry to a databas
 entries in the Checkins table, then requesting information from Yelp and Google. If the venue already exists in our database, no additional
 API calls are made, and the traffic data is updated in the Locations database table. 
 \\ \\
-
-%We learned about a lot of cool tools and services in the process of finding solutions that fitted our needs. 
-
 Apache, Phusion Passenger, and Ruby on Rails serve the HTTP requests coming from users. When the user makes a query, Rails passes the query
 string to Solr, which does the full-text indexing, geospatial and weighted search, and returns the relevant results back to the user.
 More information on the weighting will be highlighted in the next subsection.

@@ -49,12 +49,15 @@ search API, filtering for FourSquare tweets, and inserting an entry to a databas
 entries in the Checkins table, then requesting information from Yelp and Google. If the venue already exists in our database, no additional
 API calls are made, and the traffic data is updated in the Locations database table. 
 \\ \\
+<<<<<<< HEAD
 
 %We learned about a lot of cool tools and services in the process of finding solutions that fitted our needs. 
 
+=======
 Apache, Phusion Passenger, and Ruby on Rails serve the HTTP requests coming from users. When the user makes a query, Rails passes the query
 string to Solr, which does the full-text indexing, geospatial and weighted search, and returns the relevant results back to the user.
 More information on the weighting will be highlighted in the next subsection.
+>>>>>>> a433b7c5c6825f269509e7c2228ab1ae57dabd00
 
 \subsection{Ranking}
 Our overall goal with our search was to mimic to a certain extent the Google Maps search functionality. Obviously, this is not an easy task, as there are a variety of factors that need to be taken into account. Having built up metadata on each location, we can do a decent job searching based on the names and categories locations fall into using an standard full text search with Solr. With Solr we're able to assign weightings to the different fields; initially we toyed with each until we had overall results which were deemed relevant. In the end we weight the location's name and address the highest, followed by the category and then tags which we pulled from Yelp. In addition Solr indexes geographic coordinates for each location. We can issue queries with the user's location and specify a precision to limit the results to within a certain geographic range.

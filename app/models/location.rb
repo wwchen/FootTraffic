@@ -95,7 +95,6 @@ class Location < ActiveRecord::Base
 
         # TODO: What weight should hourly patterns get versus weekly patterns?
         if(params[:busy])
-          ap "#{hit.result.name}: 10 * (#{hour} / #{hit.result.daily.max}) = #{(10 * (hour / hit.result.daily.max))}"
           score = score * (10 * (hour / hit.result.daily.max))
           score = score * (10 * (day / hit.result.weekly.max))
         else

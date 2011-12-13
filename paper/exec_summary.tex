@@ -77,12 +77,24 @@ The weighting for queries involving less crowded locations is less complicated; 
 \\ \\
 Finally, we take distance into account when weighting the results. We take the distance and multiply it by a damping factor (0.1 in this case) and then divide the score by it. The result does a decent job in our tests of making sure locations closer to the user are more likely to appear.
 
-\subsection{Challenges}
-One of the largest challenges we faced in this project were accumulating data and storing it in an accessible manner. Since we rely heavily on external APIs for collecting metadata on our locations, there were numerous API limits placed on us. Google Places has a quota of 1000 queries per day, and Yelp is extremely limiting. We violated Google and Yelp's terms of service, specifically we stored the data gathered from them. If this were to be expanded beyond just an academic exercise, then our data collection would need to be done by crawling websites and determining tags and relevant data ourselves, as no API we could find would give us the data we needed without placing numerous restrictions on us. After several weeks of pulling data on a regular basis, several of our worker processes were banned from Yelp, as they (correctly) determined our usage patterns mirrored those of a bot rather than a real user.
-\\ \\
-Ranking posed a significant challenge. It took a lot of tweaking to get the weighting on the fields right. Early on in development, results for the search term ``starbucks'' would show other coffee shops as top results. It turns out that users on Yelp had been comparing local coffee shops to Starbucks, resulting in a tag weighting that overshadowed the name field. Determining which fields were more relevant to queries took a lot of experimentation; users aren't always searching for the same parameters, and having a search feature that allows for multiple categories of queries makes weighting names versus genres difficult. Placing too much emphasis on the location name puts coffee shops with ``coffee'' in the name higher on the results list for a query for ``coffee''.
-\\ \\
+\section{Challenges}
+One of the largest challenges we faced in this project were accumulating data and storing it in an accessible manner. Since we rely heavily
+on external APIs for collecting metadata on our locations, there were numerous API limits placed on us. Google Places has a quota of 1000 queries
+per day, and Yelp is extremely limiting. We violated Google and Yelp's terms of service, specifically we stored the data gathered from them. 
+If this were to be expanded beyond just an academic exercise, then our data collection would need to be done by crawling websites and determining
+tags and relevant data ourselves, as no API we could find would give us the data we needed without placing numerous restrictions on us. After several
+weeks of pulling data on a regular basis, several of our worker processes were banned from Yelp, as they (correctly) determined our usage
+patterns mirrored those of a bot rather than a real user.
+%\\ \\
 %The architecture of the application took a considerable amount of effort. From the start of the project we wanted to keep scalability in mind, as a data-driven application has to deal with large quantities of data and requests. We decided to use "delayed\_job," a queuing system that allows for "jobs" to be created and stored in a database which worker processes can then pick up and execute. Since we were going to be splitting the job of processing tweets and pulling in data from APIs across multiple computers, we needed a common database. We decided on PostgreSQL, as it is very well-supported and simple to set up, as well as trusted for large data sets. We wrote a series of jobs that pull checkins from the database and process them, kicking off additional jobs for populating newly created locations with data from Yelp and Google. The results were great, as the system could be administered from a single computer and we could expand to accept larger amounts of data.
+
+\section{Interesting Aspect}
+Ranking posed a significant challenge. It took a lot of tweaking to get the weighting on the fields right. Early on in development, results for the
+search term ``starbucks'' would show other coffee shops as top results. It turns out that users on Yelp had been comparing local coffee shops to
+Starbucks, resulting in a tag weighting that overshadowed the name field. Determining which fields were more relevant to queries took a lot of
+experimentation; users aren't always searching for the same parameters, and having a search feature that allows for multiple categories of queries
+makes weighting names versus genres difficult. Placing too much emphasis on the location name puts coffee shops with ``coffee'' in the name higher
+on the results list for a query for ``coffee''.
 
 \section{Evaluation}
 Overall, we're very pleased with our results; not only have we collected a large amount of data, our search results are relevant and useful from the evaluations we've done. We just wish there were more data in College Station! There are a number of user interface improvements that could be made which time didn't allow for. Our search algorithm could use some tweaking and testing with a larger audience. Our capabilities are limited by our dataset, however, and we're very interested in expanding the methods used to collect data, which is a very different information retrieval problem. Weaning ourselves off of external APIs and expanding the number of machines we have processing data would drastically improve our application's usefulness, as we would be able to process much larger amounts of data.

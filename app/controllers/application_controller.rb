@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :ensure_domain
 
-  APP_DOMAIN = 'foottraffic.iamchen.com'
+  APP_DOMAIN = 'foot-traffic.herokuapp.com'
 
   def ensure_domain
     if request.env['HTTP_HOST'] != APP_DOMAIN && !request.env[ 'HTTP_HOST' ].include?('localhost')

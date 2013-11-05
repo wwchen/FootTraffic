@@ -4,10 +4,9 @@
 
 common: &common
   adapter: postgresql
-  username: foottraffic
-  password: fetooVahf3
-  host: iamchen.com
   encoding: UTF8
+  pool: 5
+  password: 
 
 development:
   <<: *common
